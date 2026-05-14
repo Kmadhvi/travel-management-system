@@ -1,0 +1,161 @@
+.expenses-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.breadcrumb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.breadcrumb-row a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.page-title {
+  margin: 0 0 8px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.new-expense-btn {
+  height: 44px;
+  border-radius: 10px !important;
+  padding: 0 18px;
+  font-weight: 600;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.summary-card {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  background: #ffffff;
+}
+
+.summary-card p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.summary-card h2 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.summary-card span {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.expense-table-card {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  background: #ffffff;
+}
+
+.table-header {
+  margin-bottom: 18px;
+}
+
+.table-header h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.custom-table {
+  margin-bottom: 0;
+}
+
+.custom-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.custom-table tbody td {
+  color: #0f172a;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.custom-table a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status.draft {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+@media (max-width: 992px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+}

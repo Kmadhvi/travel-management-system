@@ -1,0 +1,132 @@
+.travel-request-list-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.breadcrumb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.breadcrumb-row a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.page-title {
+  margin: 0 0 8px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.new-request-btn {
+  height: 44px;
+  border-radius: 10px !important;
+  padding: 0 18px;
+  font-weight: 600;
+}
+
+.list-card {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  background: #ffffff;
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  flex: 1;
+}
+
+.filter-box {
+  width: 220px;
+}
+
+.custom-table {
+  margin-bottom: 0;
+}
+
+.custom-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.custom-table tbody td {
+  color: #0f172a;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.draft {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@media (max-width: 992px) {
+  .table-toolbar {
+    flex-direction: column;
+  }
+
+  .filter-box {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+}

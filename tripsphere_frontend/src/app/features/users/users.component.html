@@ -1,0 +1,91 @@
+<div class="users-page">
+  <div class="breadcrumb-row">
+    <a href="#">Home</a>
+    <span>/</span>
+    <span>Users</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Users Management</h1>
+      <p class="page-subtitle">
+        Manage employees, roles, and permissions.
+      </p>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="gotoAddUser()">
+      + Add User
+    </button>
+  </div>
+
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-toolbar">
+        <mat-form-field appearance="outline">
+          <mat-label>Search Users</mat-label>
+          <input matInput placeholder="Search by name or email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select>
+            <mat-option value="all">All</mat-option>
+            <mat-option value="employee">Employee</mat-option>
+            <mat-option value="manager">Manager</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table custom-table align-middle">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Madhvi Desai</td>
+              <td>madhvigmail.com</td>
+              <td>IT</td>
+              <td><span class="role admin">Admin</span></td>
+              <td><span class="status active">Active</span></td>
+              <td class="text-end">
+                <button mat-stroked-button>Edit</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Riya Shah</td>
+              <td>riyagmail.com</td>
+              <td>Finance</td>
+              <td><span class="role manager">Manager</span></td>
+              <td><span class="status active">Active</span></td>
+              <td class="text-end">
+                <button mat-stroked-button>Edit</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Aarav Mehta</td>
+              <td>aaravgmail.com</td>
+              <td>HR</td>
+              <td><span class="role employee">Employee</span></td>
+              <td><span class="status inactive">Inactive</span></td>
+              <td class="text-end">
+                <button mat-stroked-button>Edit</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

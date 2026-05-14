@@ -1,0 +1,67 @@
+<div class="itinerary-page">
+  <div class="breadcrumb-row">
+    <a href="#">Home</a>
+    <span>/</span>
+    <a routerLink="/travel-request-list">Requests</a>
+    <span>/</span>
+    <span>Itinerary</span>
+  </div>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <h1>Trip Itinerary - {{ itinerary?.id }}</h1>
+    <p>{{ itinerary?.destination }} • {{ itinerary?.dates }}</p>
+  </div>
+
+  <!-- TRAVEL SEGMENTS -->
+  <mat-card class="section-card">
+    <mat-card-content>
+      <h3>Travel Segments</h3>
+
+      <div class="timeline">
+        @for (segment of itinerary?.segments; track segment) {
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="content">
+              <h4>{{ segment.type }}</h4>
+              <p>{{ segment.from }} → {{ segment.to }}</p>
+              <span>{{ segment.time }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- STAY DETAILS -->
+  <mat-card class="section-card">
+    <mat-card-content>
+      <h3>Stay Details</h3>
+
+      <div class="info-grid">
+        <div>
+          <label>Hotel</label>
+          <p>{{ itinerary?.stay.hotel }}</p>
+        </div>
+
+        <div>
+          <label>Check-in</label>
+          <p>{{ itinerary?.stay.checkIn }}</p>
+        </div>
+
+        <div>
+          <label>Check-out</label>
+          <p>{{ itinerary?.stay.checkOut }}</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- NOTES -->
+  <mat-card class="section-card">
+    <mat-card-content>
+      <h3>Notes</h3>
+      <p>{{ itinerary?.notes }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

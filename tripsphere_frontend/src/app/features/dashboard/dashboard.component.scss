@@ -1,0 +1,240 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.breadcrumb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.breadcrumb-row a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  border-radius: 14px;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-top h2 {
+  margin: 0 0 6px;
+  font-size: 40px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.card-top p {
+  margin: 0;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.card-trend {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.purple-card {
+  background: #6366f1;
+}
+
+.blue-card {
+  background: #3b82f6;
+}
+
+.orange-card {
+  background: #f59e0b;
+}
+
+.red-card {
+  background: #ef4444;
+}
+
+.chart-card,
+.table-card,
+.quick-card {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  background: #ffffff;
+}
+
+.chart-header,
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.chart-header h3,
+.section-header h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.chart-header p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.chart-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.chart-placeholder {
+  position: relative;
+  height: 340px;
+  border-radius: 12px;
+  background:
+    linear-gradient(to bottom, transparent 24%, #e5e7eb 25%, transparent 26%),
+    linear-gradient(to bottom, transparent 49%, #e5e7eb 50%, transparent 51%),
+    linear-gradient(to bottom, transparent 74%, #e5e7eb 75%, transparent 76%);
+  background-color: #f8fafc;
+  overflow: hidden;
+}
+
+.chart-line {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.95;
+}
+
+.blue-line {
+  background: linear-gradient(135deg,
+    transparent 0%,
+    transparent 20%,
+    rgba(59, 130, 246, 0.18) 20%,
+    rgba(59, 130, 246, 0.18) 21%,
+    transparent 21%,
+    transparent 38%,
+    rgba(59, 130, 246, 0.18) 38%,
+    rgba(59, 130, 246, 0.18) 39%,
+    transparent 39%,
+    transparent 56%,
+    rgba(59, 130, 246, 0.18) 56%,
+    rgba(59, 130, 246, 0.18) 57%,
+    transparent 57%);
+}
+
+.green-line {
+  background: linear-gradient(155deg,
+    transparent 0%,
+    transparent 24%,
+    rgba(34, 197, 94, 0.2) 24%,
+    rgba(34, 197, 94, 0.2) 25%,
+    transparent 25%,
+    transparent 46%,
+    rgba(34, 197, 94, 0.2) 46%,
+    rgba(34, 197, 94, 0.2) 47%,
+    transparent 47%,
+    transparent 69%,
+    rgba(34, 197, 94, 0.2) 69%,
+    rgba(34, 197, 94, 0.2) 70%,
+    transparent 70%);
+}
+
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.custom-table {
+  margin-bottom: 0;
+}
+
+.custom-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.custom-table tbody td {
+  vertical-align: middle;
+  color: #0f172a;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.draft {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.quick-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.quick-actions button {
+  height: 44px;
+  border-radius: 10px !important;
+}
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-header,
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

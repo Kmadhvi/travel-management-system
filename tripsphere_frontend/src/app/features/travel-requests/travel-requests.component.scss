@@ -1,0 +1,92 @@
+.travel-request-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.breadcrumb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.breadcrumb-row a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.page-title {
+  margin: 0 0 8px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.form-card {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  background: #ffffff;
+}
+
+.request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.button-row {
+  display: flex;
+  gap: 14px;
+  justify-content: flex-start;
+}
+
+.primary-btn,
+.secondary-btn {
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 10px !important;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+}

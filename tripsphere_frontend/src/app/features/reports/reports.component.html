@@ -1,0 +1,126 @@
+<div class="reports-page">
+  <div class="breadcrumb-row">
+    <a href="#">Home</a>
+    <span>/</span>
+    <span>Reports</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Reports & Analytics</h1>
+      <p class="page-subtitle">
+        Analyze travel expenses, requests, and trends.
+      </p>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <mat-card class="filter-card">
+    <mat-card-content>
+      <div class="filter-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Month</mat-label>
+          <mat-select>
+            <mat-option value="jan">January</mat-option>
+            <mat-option value="feb">February</mat-option>
+            <mat-option value="mar">March</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select>
+            <mat-option value="all">All</mat-option>
+            <mat-option value="hr">HR</mat-option>
+            <mat-option value="it">IT</mat-option>
+            <mat-option value="finance">Finance</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- SUMMARY CARDS -->
+  <div class="summary-grid">
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p>Total Requests</p>
+        <h2>124</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p>Total Spend</p>
+        <h2>₹3,45,000</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p>Approved Requests</p>
+        <h2>98</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p>Rejected Requests</p>
+        <h2>26</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- CHART SECTION -->
+  <mat-card class="chart-card">
+    <mat-card-content>
+      <div class="section-header">
+        <h3>Monthly Travel Requests</h3>
+      </div>
+
+      <div class="chart-placeholder">
+        <div class="bar" style="height: 120px;"></div>
+        <div class="bar" style="height: 180px;"></div>
+        <div class="bar" style="height: 90px;"></div>
+        <div class="bar" style="height: 160px;"></div>
+        <div class="bar" style="height: 200px;"></div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- TOP DESTINATIONS -->
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="section-header">
+        <h3>Top Travel Destinations</h3>
+      </div>
+
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>Destination</th>
+            <th>Total Trips</th>
+            <th>Total Spend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mumbai</td>
+            <td>32</td>
+            <td>₹90,000</td>
+          </tr>
+          <tr>
+            <td>Delhi</td>
+            <td>28</td>
+            <td>₹75,000</td>
+          </tr>
+          <tr>
+            <td>Bangalore</td>
+            <td>24</td>
+            <td>₹68,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
