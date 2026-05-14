@@ -1,0 +1,72 @@
+<div class="audit-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <span>Audit Logs</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Audit Logs</h1>
+      <p class="page-subtitle">Track all important system activities and changes.</p>
+    </div>
+  </div>
+
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-toolbar">
+        <mat-form-field appearance="outline">
+          <mat-label>Search Log</mat-label>
+          <input matInput placeholder="Search by action or user" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Module</mat-label>
+          <mat-select>
+            <mat-option value="all">All</mat-option>
+            <mat-option value="request">Travel Request</mat-option>
+            <mat-option value="expense">Expense</mat-option>
+            <mat-option value="approval">Approval</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table custom-table align-middle">
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>User</th>
+              <th>Module</th>
+              <th>Action</th>
+              <th>Status Change</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>20 Apr 2026, 10:15 AM</td>
+              <td>Madhvi Desai</td>
+              <td>Travel Request</td>
+              <td>Created Request TR001</td>
+              <td>Draft → Submitted</td>
+            </tr>
+            <tr>
+              <td>20 Apr 2026, 12:40 PM</td>
+              <td>Riya Shah</td>
+              <td>Approval</td>
+              <td>Manager Approved TR001</td>
+              <td>Submitted → Approved</td>
+            </tr>
+            <tr>
+              <td>21 Apr 2026, 09:20 AM</td>
+              <td>Aarav Mehta</td>
+              <td>Expense</td>
+              <td>Submitted Expense EX001</td>
+              <td>Draft → Pending</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

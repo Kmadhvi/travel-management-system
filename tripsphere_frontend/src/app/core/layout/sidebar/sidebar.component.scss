@@ -1,0 +1,135 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidebar-wrapper {
+  height: 100%;
+  width: 100%;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border-right: 1px solid #e2e8f0;
+}
+
+.sidebar-wrapper.collapsed {
+  padding: 20px 10px;
+  align-items: center;
+}
+
+.brand-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 18px;
+}
+
+.sidebar-wrapper.collapsed .brand-section {
+  justify-content: center;
+  padding: 6px 0 20px;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.brand-text h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.brand-text p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.menu-group {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.bottom-group {
+  margin-top: auto;
+}
+
+.menu-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  margin: 0 10px 10px;
+}
+
+.mat-mdc-nav-list {
+  width: 100%;
+  padding-top: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  color: #64748b !important;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+  background: #f1f5f9;
+  color: #0f172a ;
+}
+
+.active-link {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+.menu-item mat-icon {
+  color: #64748b !important;
+}
+
+.menu-item:hover mat-icon {
+  color: #0f172a ;
+}
+
+.active-link mat-icon {
+  color: #ffffff !important;
+}
+.active-link span {
+  color: #ffffff !important;
+}
+.sidebar-wrapper.collapsed .menu-item {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar-wrapper.collapsed .mat-mdc-list-item-icon {
+  margin-right: 0 !important;
+}
+
+:host ::ng-deep .mat-mdc-list-item-interactive::before {
+  background: transparent !important;
+}

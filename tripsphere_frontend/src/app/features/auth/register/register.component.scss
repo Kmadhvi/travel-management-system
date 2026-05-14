@@ -1,0 +1,23 @@
+.auth-page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.auth-card {
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+}
+
+.auth-btn {
+  height: 48px;
+  border-radius: 10px !important;
+  font-weight: 500;
+}
+
+.auth-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}

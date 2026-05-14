@@ -1,0 +1,54 @@
+<div class="details-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <a href="javascript:void(0)">Travel Request List</a>
+    <span>/</span>
+    <span>Request Details</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Request Details - {{ requestId }}</h1>
+      <p class="page-subtitle">View complete request, approval, itinerary, and expense information.</p>
+    </div>
+  </div>
+
+  <div class="details-grid">
+    <mat-card class="details-card">
+      <mat-card-content>
+        <h3>Basic Details</h3>
+        <p><strong>Destination:</strong> Mumbai</p>
+        <p><strong>Dates:</strong> 12 Apr - 15 Apr</p>
+        <p><strong>Purpose:</strong> Client meeting and project review</p>
+        <p><strong>Budget:</strong> ₹15,000</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="details-card">
+      <mat-card-content>
+        <h3>Approval History</h3>
+        <p><strong>Manager Approval:</strong> Approved</p>
+        <p><strong>Finance Approval:</strong> Pending</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="details-card">
+      <mat-card-content>
+        <h3>Linked Itinerary</h3>
+        <p>Flight: Ahmedabad → Mumbai</p>
+        <p>Hotel: Taj Hotel</p>
+        <button mat-stroked-button (click)="goToItinerary(requestId)">View Itinerary</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="details-card">
+      <mat-card-content>
+        <h3>Linked Expenses</h3>
+        <p>Transport - ₹3,500</p>
+        <p>Food - ₹2,200</p>
+        <button mat-stroked-button (click)="goToAddexpenses()">Add Expense</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

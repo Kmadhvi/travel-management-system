@@ -1,0 +1,107 @@
+<div class="sidebar-wrapper" [class.collapsed]="collapsed">
+  <div class="brand-section">
+    <div class="brand-logo">TS</div>
+
+    @if (!collapsed) {
+    <div class="brand-text">
+      <h2>TripSphere</h2>
+      <p>Travel Admin</p>
+    </div>
+    }
+  </div>
+
+  <div class="menu-group">
+
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }" class="menu-item" matTooltip="Dashboard"
+      [matTooltipDisabled]="!collapsed">
+      <mat-icon matListItemIcon>dashboard</mat-icon>
+      @if (!collapsed) {
+        <span>Dashboard</span>
+      }
+    </a>
+    <!--    @if (loggedUserdata.role == 'Admin') { -->
+        <a mat-list-item routerLink="/users" routerLinkActive="active-link" class="menu-item" matTooltip="Users"
+        [matTooltipDisabled]="!collapsed">
+        <mat-icon matListItemIcon>group</mat-icon>
+        @if (!collapsed) {
+          <span>Users</span>
+        }
+      </a>
+    <!-- } -->
+      
+      
+        <a mat-list-item routerLink="/travel-request" routerLinkActive="active-link" class="menu-item"
+          matTooltip="Travel Request" [matTooltipDisabled]="!collapsed">
+          <mat-icon matListItemIcon>flight_takeoff</mat-icon>
+          @if (!collapsed) {
+          <span>Travel Request</span>
+          }
+        </a>
+    
+      
+      <a mat-list-item routerLink="/travel-request-list" routerLinkActive="active-link" class="menu-item"
+        matTooltip="My Trips" [matTooltipDisabled]="!collapsed">
+        <mat-icon matListItemIcon>assignment</mat-icon>
+        @if (!collapsed) {
+        <span>My Trips</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/approvals" routerLinkActive="active-link" class="menu-item" matTooltip="Approvals"
+        [matTooltipDisabled]="!collapsed">
+        <mat-icon matListItemIcon>approval</mat-icon>
+        @if (!collapsed) {
+        <span>Approvals</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/expenses" routerLinkActive="active-link" class="menu-item" matTooltip="Expenses"
+        [matTooltipDisabled]="!collapsed">
+        <mat-icon matListItemIcon>receipt_long</mat-icon>
+        @if (!collapsed) {
+        <span>Expenses</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/reports" routerLinkActive="active-link" class="menu-item" matTooltip="Reports"
+        [matTooltipDisabled]="!collapsed">
+        <mat-icon matListItemIcon>bar_chart</mat-icon>
+        @if (!collapsed) {
+        <span>Reports</span>
+        }
+      </a>
+      <a mat-list-item routerLink="/audit-logs" routerLinkActive="active-link" class="menu-item">
+        <mat-icon matListItemIcon>history</mat-icon>
+        @if (!collapsed) {
+        <span>Audit Logs</span>
+        }
+      </a>
+      <a mat-list-item routerLink="/policy-management" routerLinkActive="active-link" class="menu-item">
+        <mat-icon matListItemIcon>policy</mat-icon>
+        @if (!collapsed) {
+        <span>Policies</span>
+        }
+      </a>
+      
+    </mat-nav-list>
+  </div>
+
+  <div class="menu-group bottom-group">
+    @if (!collapsed) {
+    <p class="menu-title">SETTINGS</p>
+    }
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/settings" routerLinkActive="active-link" class="menu-item" matTooltip="Settings"
+        [matTooltipDisabled]="!collapsed">
+        <mat-icon matListItemIcon>settings</mat-icon>
+        @if (!collapsed) {
+        <span>Settings</span>
+        }
+      </a>
+    </mat-nav-list>
+  </div>
+</div>

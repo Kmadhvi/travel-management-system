@@ -1,0 +1,84 @@
+<div class="policy-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <span>Policy Management</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Policy Management</h1>
+      <p class="page-subtitle">Configure travel and expense policy rules.</p>
+    </div>
+
+    <button mat-flat-button color="primary">Save Policy Changes</button>
+  </div>
+
+  <div class="policy-grid">
+    <mat-card class="policy-card">
+      <mat-card-content>
+        <h3>Travel Rules</h3>
+        <div class="rule-item">
+          <span>Budget Limit per Trip</span>
+          <strong>₹50,000</strong>
+        </div>
+        <div class="rule-item">
+          <span>Allowed Travel Class</span>
+          <strong>Economy / Business</strong>
+        </div>
+        <div class="rule-item">
+          <span>Max Advance Booking Days</span>
+          <strong>30 Days</strong>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="policy-card">
+      <mat-card-content>
+        <h3>Expense Rules</h3>
+        <div class="rule-item">
+          <span>Receipt Mandatory</span>
+          <mat-slide-toggle checked></mat-slide-toggle>
+        </div>
+        <div class="rule-item">
+          <span>Food Claim Limit</span>
+          <strong>₹2,500</strong>
+        </div>
+        <div class="rule-item">
+          <span>Transport Claim Limit</span>
+          <strong>₹5,000</strong>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="policy-card full-width">
+      <mat-card-content>
+        <h3>Policy Violations</h3>
+        <table class="table custom-table">
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Employee</th>
+              <th>Violation</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TR009</td>
+              <td>Riya Shah</td>
+              <td>Budget exceeded by ₹8,000</td>
+              <td><span class="badge warning">Flagged</span></td>
+            </tr>
+            <tr>
+              <td>TR012</td>
+              <td>Aarav Mehta</td>
+              <td>Travel class not allowed</td>
+              <td><span class="badge warning">Flagged</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

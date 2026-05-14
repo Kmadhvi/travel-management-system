@@ -1,0 +1,165 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+/* ---------- Light Theme ---------- */
+$trip-sphere-light: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$cyan-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+/* ---------- Dark Theme ---------- */
+$trip-sphere-dark: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$blue-palette,
+    tertiary: mat.$cyan-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+
+
+/* Dark theme class */
+body.theme-dark {
+  @include mat.all-component-colors($trip-sphere-dark);
+}
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($trip-sphere-light);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($trip-sphere-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($trip-sphere-theme);
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+* {
+  box-sizing: border-box;
+}
+
+body.theme-dark {
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ---------- Global Material form styling ---------- */
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-text-field-wrapper {
+  border-radius: 12px !important;
+}
+
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+  border-radius: 10px !important;
+  font-family: inherit !important;
+}
+
+.mat-mdc-card {
+  border-radius: 18px !important;
+  font-family: inherit !important;
+}
+
+/* ---------- Clean light form fields ---------- */
+body:not(.theme-dark) {
+  .mat-mdc-form-field-subscript-wrapper,
+  .mat-mdc-form-field,
+  .mdc-text-field,
+  .mdc-floating-label,
+  .mat-mdc-input-element,
+  .mat-mdc-select-value-text {
+    font-family: inherit !important;
+  }
+
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+    background: #ffffff !important;
+  }
+
+  .mdc-text-field--outlined .mdc-notched-outline__leading,
+  .mdc-text-field--outlined .mdc-notched-outline__notch,
+  .mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border-color: #cbd5e1 !important;
+  }
+
+  .mdc-floating-label,
+  .mat-mdc-input-element,
+  .mat-mdc-select-value-text {
+    color: #0f172a !important;
+  }
+}
+
+/* ---------- Clean dark form fields ---------- */
+body.theme-dark {
+  .mat-mdc-form-field-subscript-wrapper,
+  .mat-mdc-form-field,
+  .mdc-text-field,
+  .mdc-floating-label,
+  .mat-mdc-input-element,
+  .mat-mdc-select-value-text {
+    font-family: inherit !important;
+  }
+
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+    background: #111827 !important;
+  }
+
+  .mdc-text-field--outlined .mdc-notched-outline__leading,
+  .mdc-text-field--outlined .mdc-notched-outline__notch,
+  .mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border-color: #374151 !important;
+  }
+
+  .mdc-floating-label,
+  .mat-mdc-input-element,
+  .mat-mdc-select-value-text,
+  .mat-datepicker-toggle-default-icon {
+    color: #f3f4f6 !important;
+  }
+
+  .mat-mdc-card {
+    background: #111827 !important;
+    color: #f3f4f6 !important;
+  }
+
+  .mat-toolbar {
+    background: #111827 !important;
+    color: #f9fafb !important;
+  }
+}

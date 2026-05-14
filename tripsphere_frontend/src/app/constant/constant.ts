@@ -1,0 +1,33 @@
+export const Constant = {
+    Menu_Items:[
+        {
+            path:'dashboard',
+            allowedRoles:['Admin','Employee','Manager','Finance']
+        },
+        {
+            path:'users',
+            allowedRoles:['Admin']
+        },
+        {
+            path:'travel-request',
+            allowedRoles:['Admin','Employee','Manager']
+        },
+        {
+            path:'travel-request-list',
+            allowedRoles:['Admin','Employee','Manager','Finance']
+        },
+        {
+            path:'expenses',
+            allowedRoles:['Admin','Employee','Manager','Finance']
+        },
+        {
+            path:'travel-request-list', 
+            allowedRoles:['Admin','Employee']
+        },
+        {
+            path:'add-user',
+            allowedRoles:['Admin']
+        },
+           
+    ]
+}

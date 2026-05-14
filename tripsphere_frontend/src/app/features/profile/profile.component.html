@@ -1,0 +1,120 @@
+<div class="profile-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <span>Profile</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Profile</h1>
+      <p class="page-subtitle">View your account details and profile information.</p>
+    </div>
+  </div>
+
+  <div class="profile-grid">
+    <mat-card class="profile-card main-profile-card">
+      <mat-card-content>
+        <div class="profile-top">
+          <div class="avatar-circle">
+            {{ user.name.charAt(0) }}
+          </div>
+
+          <div class="profile-main-info">
+            <h2>{{ user.name }}</h2>
+            <p>{{ user.role }} • {{ user.department }}</p>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button mat-flat-button color="primary">Edit Profile</button>
+          <button mat-stroked-button>Change Password</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profile-card">
+      <mat-card-content>
+        <h3>Contact Information</h3>
+        <div class="info-list">
+          <div class="info-row">
+            <span>Email</span>
+            <strong>{{ user.email }}</strong>
+          </div>
+          <div class="info-row">
+            <span>Phone</span>
+            <strong>{{ user.phone }}</strong>
+          </div>
+          <div class="info-row">
+            <span>Location</span>
+            <strong>{{ user.location }}</strong>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profile-card">
+      <mat-card-content>
+        <h3>Employment Details</h3>
+        <div class="info-list">
+          <div class="info-row">
+            <span>Employee ID</span>
+            <strong>{{ user.employeeId }}</strong>
+          </div>
+          <div class="info-row">
+            <span>Department</span>
+            <strong>{{ user.department }}</strong>
+          </div>
+          <div class="info-row">
+            <span>Role</span>
+            <strong>{{ user.role }}</strong>
+          </div>
+          <div class="info-row">
+            <span>Joined On</span>
+            <strong>{{ user.joinedOn }}</strong>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profile-card full-width">
+      <mat-card-content>
+        <h3>Account Overview</h3>
+
+        <div class="overview-grid">
+          <div class="overview-item">
+            <mat-icon>flight_takeoff</mat-icon>
+            <div>
+              <p>Total Requests</p>
+              <h4>24</h4>
+            </div>
+          </div>
+
+          <div class="overview-item">
+            <mat-icon>approval</mat-icon>
+            <div>
+              <p>Pending Approvals</p>
+              <h4>8</h4>
+            </div>
+          </div>
+
+          <div class="overview-item">
+            <mat-icon>receipt_long</mat-icon>
+            <div>
+              <p>Expenses Submitted</p>
+              <h4>12</h4>
+            </div>
+          </div>
+
+          <div class="overview-item">
+            <mat-icon>bar_chart</mat-icon>
+            <div>
+              <p>Reports Access</p>
+              <h4>Enabled</h4>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

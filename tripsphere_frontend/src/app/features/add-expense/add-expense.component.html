@@ -1,0 +1,127 @@
+<div class="add-expense-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <a routerLink="/expenses">Expenses</a>
+    <span>/</span>
+    <span>Add Expense</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Submit Expense</h1>
+      <p class="page-subtitle">Add a new expense entry with receipt upload.</p>
+    </div>
+  </div>
+
+  @if (requestDetails) {
+  <mat-card class="request-info-card">
+    <mat-card-content>
+      <div class="request-info-grid">
+        <div>
+          <label>Request ID</label>
+          <p>{{ requestDetails.id }}</p>
+        </div>
+
+        <div>
+          <label>Destination</label>
+          <p>{{ requestDetails.destination }}</p>
+        </div>
+
+        <div>
+          <label>Travel Dates</label>
+          <p>{{ requestDetails.dates }}</p>
+        </div>
+
+        <div>
+          <label>Department</label>
+          <p>{{ requestDetails.department }}</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+}
+
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="expense-form">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Travel Request</mat-label>
+            <mat-select formControlName="requestId">
+              <mat-option value="TR001">TR001 - Mumbai</mat-option>
+              <mat-option value="TR002">TR002 - Delhi</mat-option>
+              <mat-option value="TR003">TR003 - Bangalore</mat-option>
+            </mat-select>
+            @if (f['requestId'].touched && f['requestId'].errors?.['required']) {
+              <mat-error>Travel request is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Expense Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="transport">Transport</mat-option>
+              <mat-option value="stay">Stay</mat-option>
+              <mat-option value="food">Food</mat-option>
+            </mat-select>
+            @if (f['category'].touched && f['category'].errors?.['required']) {
+              <mat-error>Expense category is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount" placeholder="Enter amount" />
+            @if (f['amount'].touched && f['amount'].errors?.['required']) {
+              <mat-error>Amount is required</mat-error>
+            }
+            @if (f['amount'].touched && f['amount'].errors?.['min']) {
+              <mat-error>Amount must be greater than 0</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="file-upload-box">
+            <label class="upload-label">Upload Receipt</label>
+            <input type="file" (change)="onFileSelected($event)" />
+            <p class="upload-note">Accepted: PDF, JPG, PNG</p>
+
+            @if (selectedFileName) {
+              <div class="selected-file">Selected: {{ selectedFileName }}</div>
+            }
+
+            @if (f['receipt'].touched && f['receipt'].errors?.['required']) {
+              <div class="file-error">Receipt file is required</div>
+            }
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              rows="5"
+              formControlName="description"
+              placeholder="Enter expense details"
+            ></textarea>
+            @if (f['description'].touched && f['description'].errors?.['required']) {
+              <mat-error>Description is required</mat-error>
+            }
+            @if (f['description'].touched && f['description'].errors?.['minlength']) {
+              <mat-error>Description must be at least 5 characters</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="button-row">
+          <button mat-stroked-button type="button" class="secondary-btn" (click)="goBack()">
+            Cancel
+          </button>
+
+          <button mat-flat-button color="primary" type="submit" class="primary-btn">
+            Submit Expense
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

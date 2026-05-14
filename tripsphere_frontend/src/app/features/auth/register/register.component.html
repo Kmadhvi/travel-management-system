@@ -1,0 +1,84 @@
+<div class="auth-page">
+  <div class="container-fluid">
+    <div class="row min-vh-100 justify-content-center align-items-center">
+      <div class="col-12 col-md-9 col-lg-6 col-xl-5">
+        <mat-card class="auth-card">
+          <mat-card-content>
+            <div class="text-center mb-4">
+              <h1 class="fw-bold mb-4">TripSphere </h1>
+              <h2 class="fw-bold mb-2">Register</h2>
+              <p class="text-muted mb-0">Create your travel management account</p>
+            </div>
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <mat-form-field appearance="outline" class="w-100 mb-3">
+                <mat-label>Full Name</mat-label>
+                <input matInput type="text" formControlName="fullName" name="fullName" />
+                @if (this.registerForm.get('fullName')?.touched && this.registerForm.get('fullName')?.errors?.['required']) {
+                  <mat-error>Full name is required</mat-error>
+                } 
+                @if (this.registerForm.get('fullName')?.touched && this.registerForm.get('fullName')?.errors?.['pattern']) {
+                  <mat-error>Invalid full name format</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-100 mb-3">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" />
+                  @if (this.registerForm.get('email')?.touched && this.registerForm.get('email')?.errors?.['required']) {
+                  <mat-error>Email is required</mat-error>
+                } 
+                @if (this.registerForm.get('email')?.touched && this.registerForm.get('email')?.errors?.['pattern']) {
+                  <mat-error>Invalid Email format</mat-error>
+                }
+              </mat-form-field>
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="w-100 mb-3">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password" />
+                    @if (this.registerForm.get('password')?.touched && this.registerForm.get('password')?.errors?.['required'] ) {
+                      <mat-error>Password is required</mat-error>
+                    }
+                    @if (this.registerForm.get('password')?.touched && this.registerForm.get('password')?.errors?.['minlength'] ) {
+                      <mat-error>Password must be min 6 characters</mat-error>
+                    }
+                    @if (this.registerForm.get('password')?.touched && this.registerForm.get('password')?.errors?.['maxlength']) {
+                      <mat-error>Password must be max 10 characters</mat-error>
+                    }
+                  
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <mat-form-field appearance="outline" class="w-100 mb-3">
+                    <mat-label>Confirm Password</mat-label>
+                    <input matInput type="password" formControlName="confirmPassword" />
+                    @if (this.registerForm.get('confirmPassword')?.touched && this.registerForm.get('confirmPassword')?.errors?.['required'] ) {
+                      <mat-error>Password is required</mat-error>
+                    }
+                    @if (this.registerForm.get('confirmPassword')?.touched && this.registerForm.get('confirmPassword')?.errors?.['minlength'] ) {
+                      <mat-error>Password must be min 6 characters</mat-error>
+                    }
+                    @if (this.registerForm.get('confirmPassword')?.touched && this.registerForm.get('confirmPassword')?.errors?.['maxlength']) {
+                      <mat-error>Password must be max 10 characters</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <button mat-raised-button color="primary" class="w-100 auth-btn" type="submit">
+                Register
+              </button>
+            </form>
+
+            <p class="text-center mt-4 mb-0">
+              Already have an account?
+              <a routerLink="/login" class="auth-link">Login</a>
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

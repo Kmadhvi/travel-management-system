@@ -1,0 +1,109 @@
+<div class="travel-request-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <span>Travel Request</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Create Travel Request</h1>
+      <p class="page-subtitle">
+        Fill in the details below to submit a new employee travel request.
+      </p>
+    </div>
+  </div>
+
+  <mat-card class="form-card">
+    <mat-card-content>
+      <form class="request-form">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Destination</mat-label>
+            <input
+              matInput
+              [(ngModel)]="destination"
+              name="destination"
+              placeholder="Enter destination"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select [(ngModel)]="department" name="department">
+              <mat-option value="HR">HR</mat-option>
+              <mat-option value="Finance">Finance</mat-option>
+              <mat-option value="IT">IT</mat-option>
+              <mat-option value="Operations">Operations</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="startPicker"
+              [(ngModel)]="startDate"
+              name="startDate"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="endPicker"
+              [(ngModel)]="endDate"
+              name="endDate"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Travel Class</mat-label>
+            <mat-select [(ngModel)]="travelClass" name="travelClass">
+              <mat-option value="Economy">Economy</mat-option>
+              <mat-option value="Business">Business</mat-option>
+              <mat-option value="First Class">First Class</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Estimated Budget</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="budget"
+              name="budget"
+              placeholder="Enter estimated budget"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Purpose of Travel</mat-label>
+            <textarea
+              matInput
+              rows="5"
+              [(ngModel)]="purpose"
+              name="purpose"
+              placeholder="Enter travel purpose"
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="button-row">
+          <button mat-stroked-button type="button" class="secondary-btn" (click)="saveDraft()">
+            Save Draft
+          </button>
+
+          <button mat-flat-button color="primary" type="button" class="primary-btn" (click)="submitRequest()">
+            Submit Request
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

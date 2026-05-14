@@ -1,0 +1,77 @@
+.users-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.page-subtitle {
+  color: #64748b;
+}
+
+.table-card {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.custom-table th {
+  background: #f8fafc;
+  color: #475569;
+}
+
+.custom-table td {
+  color: #0f172a;
+}
+
+/* ROLE BADGES */
+.role {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.role.admin {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.role.manager {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.role.employee {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* STATUS */
+.status {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}

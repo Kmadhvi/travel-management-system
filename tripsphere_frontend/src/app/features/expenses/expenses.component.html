@@ -1,0 +1,119 @@
+<div class="expenses-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <span>Expenses</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Expenses</h1>
+      <p class="page-subtitle">
+        Track submitted expenses and reimbursement requests.
+      </p>
+    </div>
+    
+    <button mat-flat-button color="primary" class="new-expense-btn" (click)="goToAddExpense()">
+      + Add Expense
+    </button>
+  </div>
+
+  <div class="summary-grid">
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p>Total Submitted</p>
+        <h2>₹48,500</h2>
+        <span>This month</span>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p>Pending Reimbursement</p>
+        <h2>₹18,000</h2>
+        <span>Under review</span>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <p>Approved Claims</p>
+        <h2>12</h2>
+        <span>Processed successfully</span>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="expense-table-card">
+    <mat-card-content>
+      <div class="table-header">
+        <h3>Recent Expense Entries</h3>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table custom-table align-middle">
+          <thead>
+            <tr>
+              <th>Expense ID</th>
+              <th>Category</th>
+              <th>Request ID</th>
+              <th>Amount</th>
+              <th>Proof</th>
+              <th>Status</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EX001</td>
+              <td>Transport</td>
+              <td>TR001</td>
+              <td>₹3,500</td>
+              <td><a href="javascript:void(0)">Receipt.pdf</a></td>
+              <td><span class="status pending">Pending</span></td>
+              <td class="text-end">
+                <button mat-stroked-button>View</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>EX002</td>
+              <td>Stay</td>
+              <td>TR002</td>
+              <td>₹8,000</td>
+              <td><a href="javascript:void(0)">Hotel-Bill.pdf</a></td>
+              <td><span class="status approved">Approved</span></td>
+              <td class="text-end">
+                <button mat-stroked-button>View</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>EX003</td>
+              <td>Food</td>
+              <td>TR003</td>
+              <td>₹2,200</td>
+              <td><a href="javascript:void(0)">Food-Receipt.pdf</a></td>
+              <td><span class="status rejected">Rejected</span></td>
+              <td class="text-end">
+                <button mat-stroked-button>View</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>EX004</td>
+              <td>Transport</td>
+              <td>TR004</td>
+              <td>₹1,800</td>
+              <td><a href="javascript:void(0)">Cab-Bill.pdf</a></td>
+              <td><span class="status draft">Draft</span></td>
+              <td class="text-end">
+                <button mat-stroked-button>View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

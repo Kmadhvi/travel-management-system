@@ -1,0 +1,113 @@
+<div class="travel-request-list-page">
+  <div class="breadcrumb-row">
+    <a href="javascript:void(0)">Home</a>
+    <span>/</span>
+    <span>Travel Request List</span>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Travel Request List</h1>
+      <p class="page-subtitle">
+        View and manage all submitted travel requests.
+      </p>
+    </div>
+
+    <button mat-flat-button color="primary" routerLink="/travel-request" class="new-request-btn">
+      + New Request
+    </button>
+  </div>
+
+  <mat-card class="list-card">
+    <mat-card-content>
+      <div class="table-toolbar">
+        <div class="search-box">
+          <mat-form-field appearance="outline">
+            <mat-label>Search requests</mat-label>
+            <input matInput placeholder="Search by ID, destination or employee" />
+          </mat-form-field>
+        </div>
+
+        <div class="filter-box">
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select>
+              <mat-option value="all">All</mat-option>
+              <mat-option value="pending">Pending</mat-option>
+              <mat-option value="approved">Approved</mat-option>
+              <mat-option value="rejected">Rejected</mat-option>
+              <mat-option value="draft">Draft</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table custom-table align-middle">
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Destination</th>
+              <th>Department</th>
+              <th>Travel Dates</th>
+              <th>Budget</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TR001</td>
+              <td>Mumbai</td>
+              <td>Finance</td>
+              <td>12 Apr - 15 Apr</td>
+              <td>₹15,000</td>
+              <td><span class="status pending">Pending</span></td>
+              <td class="text-end">
+                <button mat-stroked-button (click)="viewRequestDetails('TR002')">
+                  View
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>TR002</td>
+              <td>Delhi</td>
+              <td>HR</td>
+              <td>18 Apr - 20 Apr</td>
+              <td>₹20,000</td>
+              <td><span class="status approved">Approved</span></td>
+              <td class="text-end">
+                <button mat-stroked-button (click)="viewRequestDetails('TR002')">View</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>TR003</td>
+              <td>Bangalore</td>
+              <td>IT</td>
+              <td>22 Apr - 24 Apr</td>
+              <td>₹12,500</td>
+              <td><span class="status draft">Draft</span></td>
+              <td class="text-end">
+                <button mat-stroked-button (click)="viewRequestDetails('TR002')">View</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>TR004</td>
+              <td>Pune</td>
+              <td>Operations</td>
+              <td>26 Apr - 28 Apr</td>
+              <td>₹10,800</td>
+              <td><span class="status rejected">Rejected</span></td>
+              <td class="text-end">
+                <button mat-stroked-button (click)="viewRequestDetails('TR002')">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
