@@ -37,7 +37,8 @@ export class LoginComponent {
   onSubmit(){
     if(this.loginForm.valid){
       this.loading = true;
-      this.authService.login(this.loginForm.value).subscribe({
+      this.router.navigate(['/dashboard']);
+     /*  this.authService.login(this.loginForm.value).subscribe({
         next: () =>{
           this.snackBar.open('Login Successful! ','Close',{duration: 3000});
           this.router.navigate(['/dashboard']);
@@ -46,7 +47,7 @@ export class LoginComponent {
           this.loading = false;
           this.snackBar.open('Invalid email or password','Close',{duration: 3000});
         }
-      });
+      }); */
 
     }
   }
