@@ -1,53 +1,48 @@
-<div class="auth-page">
-  <div class="container-fluid">
-    <div class="row min-vh-100 justify-content-center align-items-center">
-      <div class="col-12 col-md-8 col-lg-5 col-xl-4">
-        <mat-card class="auth-card">
-          <mat-card-content>
-            <div class="text-center mb-4">
-              <h1 class="fw-bold mb-4">TripSphere</h1>
-              <h3 class="fw-bold mb-2">Login</h3>
-              <p class="text-muted mb-0">Access your travel management account</p>
+ <div class="login-page">
+      <div class="login-card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="row g-0">
+          <div class="col-md-6 bg-primary d-none d-md-flex align-items-center justify-content-center p-5 text-white flex-column text-center">
+            <h1 class="display-4 fw-bold mb-4">TripSphere</h1>
+            <p class="lead mb-0">Seamless Travel & Expense Management for Modern Enterprises.</p>
+            <div class="mt-5 opacity-75">
+              <i class="bi bi-airplane fs-1"></i>
             </div>
+          </div>
+          <div class="col-md-6 bg-white p-5">
+            <div class="mb-4">
+              <h2 class="fw-bold text-dark">Welcome Back</h2>
+              <p class="text-muted">Sign in to manage your travels</p>
+            </div>
+
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-              <mat-form-field appearance="outline" class="w-100 mb-3">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" formControlName="email" />
-                <mat-error *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']">
-                  Email is required
-                </mat-error>
-                <mat-error *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['pattern']">
-                  Invalid email format
-                </mat-error>
-              </mat-form-field>
+              <div class="mb-3">
+                <label class="form-label text-muted small text-uppercase fw-bold">Email Address</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope"></i></span>
+                  <input type="email" class="form-control border-start-0 bg-light" formControlName="email" placeholder="name@company.com">
+                </div>
+              </div>
 
-              <mat-form-field appearance="outline" class="w-100 mb-3">
-                <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password" />
-                <mat-error *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
-                  Password is required
-                </mat-error>
-                <mat-error *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['minlength']">
-                  Password must be at least 6 characters
-                </mat-error>
-                <mat-error *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['maxlength']">
-                  Password must not exceed 10 characters
-                </mat-error>
+              <div class="mb-4">
+                <label class="form-label text-muted small text-uppercase fw-bold">Password</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
+                  <input type="password" class="form-control border-start-0 bg-light" formControlName="password" placeholder="••••••••">
+                </div>
+              </div>
 
-              </mat-form-field>
-
-              <button mat-raised-button color="primary" class="w-100 auth-btn" type="submit">
-                Login
+              <button class="btn btn-primary btn-lg w-100 rounded-pill fw-bold mb-3 shadow-sm" [disabled]="loginForm.invalid || loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ loading ? 'Authenticating...' : 'Sign In' }}
               </button>
-            </form>
 
-            <p class="text-center mt-4 mb-0">
-              Don't have an account?
-              <a routerLink="/register" class="auth-link">Register</a>
-            </p>
-          </mat-card-content>
-        </mat-card>
+              <div class="text-center">
+                <p class="text-muted small">Don't have an account? 
+                  <a routerLink="/register" class="text-primary fw-bold text-decoration-none">Create Account</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>

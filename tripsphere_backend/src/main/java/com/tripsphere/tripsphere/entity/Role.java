@@ -1,8 +1,8 @@
 package com.tripsphere.tripsphere.entity;
 
 public enum Role {
-    ADMIN,
+    EMPLOYEE,
     MANAGER,
     FINANCE,
-    EMPLOYEE
+    ADMIN
 }

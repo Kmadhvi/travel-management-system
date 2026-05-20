@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-//import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  //private apiUrl = environment.apiUrl + '/auth';
-  private apiUrl = "https://dummyjson.com" + '/auth/me';
+  private apiUrl = environment.apiUrl + '/auth';
 
   private currentUserSubject = new BehaviorSubject<any>(null);
 
@@ -22,15 +21,19 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        const userData = response.user;
-        localStorage.setItem('token', response.token);
+        const token = response.token || response.accessToken || response.jwt;
+        const userData = response.user || response;
+
+        if (token) {
+          localStorage.setItem('token', token);
+        }
         localStorage.setItem('y', 'true');
         // Store FULL user object — make sure role is uppercase string
         const user = {
           id: userData.id,
           name: userData.name,
           email: userData.email,
-          role: userData.role.toUpperCase().trim(), // normalize
+          role: userData.role?.toUpperCase().trim(),
           department: userData.department,
           employeeId: userData.employeeId
         };
