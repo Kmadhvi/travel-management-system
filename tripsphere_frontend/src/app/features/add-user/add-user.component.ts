@@ -93,6 +93,8 @@ export class AddUserComponent implements OnInit {
 
     const data = this.userForm.value;
 
+    data.enabled = true; // Add default enabled field
+
     console.log('Form Data:', data);
 
      if (this.isEditMode && this.selectedUserId) {
@@ -110,6 +112,7 @@ export class AddUserComponent implements OnInit {
       });
     } else {
       // Create logic
+      data.enabled = true; // Add default enabled field
       console.log('Creating user with data:', data);
       this.userService.create(data).subscribe({
         next: () => {
