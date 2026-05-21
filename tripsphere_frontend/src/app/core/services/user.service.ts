@@ -9,6 +9,7 @@ export class UserService {
   constructor(private http: HttpClient) {
     console.log(this.api);
   }
+  
   getUsers(page: number, size: number) {
       return this.http.get<any>(`${this.api}/getusers?page=${page}&size=${size}`);
   }
@@ -19,7 +20,7 @@ export class UserService {
     return this.http.put(`${this.api}/update-user/${id}`, data); 
   }
   delete(id: number)              { 
-    return this.http.delete(`${this.api}/delete-user/${id}`); 
+    return this.http.delete(`${this.api}/delete/${id}`); 
   }
   getManagersByDepartment(department: string) {
     return this.http.get<any[]>(
