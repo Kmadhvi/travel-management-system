@@ -1,5 +1,6 @@
 package com.tripsphere.tripsphere.controller;
 
+import com.tripsphere.tripsphere.dto.UserDTO;
 import com.tripsphere.tripsphere.entity.User;
 import com.tripsphere.tripsphere.security.JwtUtil;
 import com.tripsphere.tripsphere.service.UserService;
@@ -7,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/users")
@@ -37,19 +40,23 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(service.createUser(user));
+    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(service.createUser(userDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.ok(service.updateUser(id, user));
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDTO user) {
+        return ResponseEntity.ok(service.updateUser(id,user));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         service.deleteUser(id);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/managers/{department}")
+    public ResponseEntity<List<UserDTO>> getManagersByDepartment(@PathVariable String department) {
+        return ResponseEntity.ok(service.getManagersByDepartment(department));
     }
 
 }

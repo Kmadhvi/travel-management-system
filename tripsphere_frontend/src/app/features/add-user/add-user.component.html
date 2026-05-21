@@ -61,6 +61,26 @@
           </mat-select>
         </mat-form-field>
 
+        <!-- Manager Dropdown -->
+      @if(userForm.get('role')?.value === 'EMPLOYEE') {
+
+        <mat-form-field appearance="outline">
+          <mat-label>Manager</mat-label>
+
+          <mat-select formControlName="managerId">
+
+            @for (manager of managers; track manager.id) {
+              <mat-option [value]="manager.id">
+                {{ manager.name }}
+              </mat-option>
+            } 
+
+          </mat-select>
+
+        </mat-form-field>
+
+      }
+
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
           <input matInput type="password" formControlName="password" />

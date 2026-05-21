@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
+
+  
  user = {
     name: 'Madhvi Desai',
     role: 'Admin',
