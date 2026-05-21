@@ -14,4 +14,9 @@ export class UserService {
   create(data: any)               { return this.http.post(this.api, data); }
   update(id: number, data: any)   { return this.http.put(`${this.api}/${id}`, data); }
   delete(id: number)              { return this.http.delete(`${this.api}/${id}`); }
+  getManagersByDepartment(department: string) {
+    return this.http.get<any[]>(
+    `${this.api}/managers/${department}`
+  );
+}
 }

@@ -15,4 +15,7 @@ public class UserDTO  {
     private String employeeId;
     private String phone;
     private String location;
+    private Long managerId;
+    private String managerName;
+
 }
