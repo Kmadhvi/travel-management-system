@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     FormsModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule 
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
@@ -34,6 +36,9 @@ export class UsersComponent implements OnInit {
   isEditMode = false;
   searchTerm = '';
   selectedRole = 'ALL';
+  page = 0;
+  size = 5;
+totalElements = 0;
   readonly roles = ['ALL', 'ADMIN', 'MANAGER', 'FINANCE', 'EMPLOYEE'];  
   readonly departments = ['HR', 'Finance', 'IT', 'Operations', 'Sales', 'Marketing'];
   constructor (private router:Router , private userService: UserService, private snackBar: MatSnackBar){}
@@ -48,10 +53,11 @@ export class UsersComponent implements OnInit {
 
   loadUsers() {
     this.isLoading = true;
-    this.userService.getAll().subscribe({
+    this.userService.getUsers(this.page, this.size).subscribe({
       next: (data) => {
-        this.users = data;
-        this.applyFilter();
+        this.users = data.content;
+        this.applyFilter(data.content);
+        this.totalElements = data.totalElements;
         this.isLoading = false;
       },
       error: () => {
@@ -60,8 +66,18 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-  applyFilter() {
-    let result = [...this.users];
+  onPageChange(event: any) {
+
+  this.page = event.pageIndex;
+
+  this.size = event.pageSize;
+
+  this.loadUsers();
+
+}
+  applyFilter(users: any[]) {
+    //let result = [...this.users];
+    let result = users;
     if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase();
       result = result.filter(u =>

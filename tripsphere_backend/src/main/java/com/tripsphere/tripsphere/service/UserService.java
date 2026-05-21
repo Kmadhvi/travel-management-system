@@ -5,10 +5,12 @@ import com.tripsphere.tripsphere.entity.Role;
 import com.tripsphere.tripsphere.entity.User;
 import com.tripsphere.tripsphere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 
 @Service
@@ -17,9 +19,23 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public List<UserDTO> getAllUsers(){
-        return repository.findAll().stream().map(this::maptoDTO).collect(Collectors.toList());
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
+
+    public Page<UserDTO> getAllUsers(
+            int page,
+            int size
+    ) {
+
+        Pageable pageable =
+                PageRequest.of(page, size);
+
+        Page<User> users =
+                repository.findAll(pageable);
+
+        return users.map(this::maptoDTO);
     }
+
 
     public UserDTO createUser(UserDTO dto) {
         // EMAIL VALIDATION
@@ -38,6 +54,7 @@ public class UserService {
         user.setEmployeeId(dto.getEmployeeId());
         user.setPhone(dto.getPhone());
         user.setLocation(dto.getLocation());
+        user.setPassword("admin@123");
         // Set manager
         if(dto.getManagerId() != null) {
 
@@ -66,7 +83,6 @@ public class UserService {
         user.setEmployeeId(userDetails.getEmployeeId());
         user.setPhone(userDetails.getPhone());
         user.setLocation(userDetails.getLocation());
-
         if(id.equals(userDetails.getManagerId())) {
 
             throw new RuntimeException(
@@ -99,24 +115,24 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public UserDTO updateMyProfile(String email, UserDTO dto) {
-        User user = repository.findByEmail(email).orElseThrow();
-        user.setName(dto.getName());
-        user.setPhone(dto.getPhone());
-        user.setDepartment(dto.getDepartment());
-        user.setLocation(dto.getLocation());
-        return maptoDTO(repository.save(user));
-    }
+//    public UserDTO updateMyProfile(String email, UserDTO dto) {
+//        User user = repository.findByEmail(email).orElseThrow();
+//        user.setName(dto.getName());
+//        user.setPhone(dto.getPhone());
+//        user.setDepartment(dto.getDepartment());
+//        user.setLocation(dto.getLocation());
+//        return maptoDTO(repository.save(user));
+//    }
 
-    public boolean changePassword(String email, String currentPassword, String newPassword) {
-        User user = repository.findByEmail(email).orElseThrow();
-        if (currentPassword != user.getPassword()) {
-            user.setPassword(newPassword);
-            repository.save(user);
-            return true;
-        }
-        return false;
-    }
+//    public boolean changePassword(String email, String currentPassword, String newPassword) {
+//        User user = repository.findByEmail(email).orElseThrow();
+//        if (currentPassword != user.getPassword()) {
+//            user.setPassword(newPassword);
+//            repository.save(user);
+//            return true;
+//        }
+//        return false;
+//    }
 
     public List<UserDTO> getManagersByDepartment(String department) {
         List<User> managers = repository.findByRoleAndDepartment(Role.MANAGER,department);
