@@ -18,7 +18,7 @@
     </button>
   </div>
 
-  <mat-card class="table-card">
+  <mat-card class="table-card" >
     <mat-card-content>
       <div class="table-toolbar">
         <mat-form-field appearance="outline">
@@ -27,13 +27,13 @@
             matInput
             placeholder="Search by name or email"
             [(ngModel)]="searchTerm"
-            (input)="applyFilter()"
+            (input)="applyFilter(users)"
           />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Role</mat-label>
-          <mat-select [(value)]="selectedRole" (selectionChange)="applyFilter()">
+          <mat-select [(value)]="selectedRole" (selectionChange)="applyFilter(users)">
             @for (role of roles; track role) {
               <mat-option [value]="role">{{ role }}</mat-option>
             }
@@ -89,6 +89,14 @@
           </tbody>
         </table>
       </div>
+      <mat-paginator
+      [length]="totalElements"
+      [pageSize]="size"
+      [pageSizeOptions]="[5, 10, 20]"
+      [pageIndex]="page"
+      showFirstLastButtons
+      (page)="onPageChange($event)">
+    </mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>
