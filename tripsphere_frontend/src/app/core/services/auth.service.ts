@@ -21,12 +21,12 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        const token = response.token || response.accessToken || response.jwt;
+      //  const token = response.token || response.accessToken || response.jwt;
         const userData = response.user || response;
 
-        if (token) {
+       /*  if (token) {
           localStorage.setItem('token', token);
-        }
+        } */
         localStorage.setItem('y', 'true');
         // Store FULL user object — make sure role is uppercase string
         const user = {

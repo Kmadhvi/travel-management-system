@@ -20,20 +20,12 @@ public class AuthController {
     @Autowired
     private AuthService service;
 
-    public ResponseEntity<?> login(@RequestBody LoginRequest request){
-        try{
-            return ResponseEntity.ok(service.login(request));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    public ResponseEntity<?> register(@RequestBody User user){
-        try{
-            return ResponseEntity.ok(service.register(user));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+//    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+//        try{
+//            return ResponseEntity.ok(service.login(request));
+//        }catch (Exception e){
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
 
 }

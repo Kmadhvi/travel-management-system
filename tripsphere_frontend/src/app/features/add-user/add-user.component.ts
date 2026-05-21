@@ -36,7 +36,7 @@ export class AddUserComponent implements OnInit {
   selectedUserId:number | null = null;
   isLoading = false;
   users: any[] = [];
-
+  managers: any[] = [];
   readonly departments = ['HR', 'Finance', 'IT', 'Operations', 'Sales', 'Marketing'];
   readonly roles = ['ADMIN', 'MANAGER', 'FINANCE', 'EMPLOYEE'];
 
@@ -50,8 +50,58 @@ export class AddUserComponent implements OnInit {
       phone: ['', [Validators.required, /* Validators.pattern('^[0-9]{10}$') */]],
       location: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      managerId: [null]
+    });
+    this.userForm.get('role')?.valueChanges.subscribe(role => {
+
+      const department =
+        this.userForm.get('department')?.value;
+
+      if (role === 'EMPLOYEE' && department) {
+
+        this.loadManagersByDepartment(department);
+
+      } else {
+
+        this.managers = [];
+        this.userForm.patchValue({
+          managerId: null
+        });
+
+      }
 
     });
+
+     this.userForm.get('department')?.valueChanges.subscribe(department => {
+
+      const role =
+        this.userForm.get('role')?.value;
+
+      if (role === 'EMPLOYEE' && department) {
+
+        this.loadManagersByDepartment(department);
+
+      }
+
+    });
+
+
+  }
+
+  loadManagersByDepartment(department: string) {
+    console.log('Loading managers for department:', department);
+    this.userService
+      .getManagersByDepartment(department)
+      .subscribe({
+        next: (data) => {
+          this.managers = data;
+        },
+        error: (err) => {
+          console.error(err);
+        }
+
+      });
+
   }
 
   ngOnInit() {
@@ -69,6 +119,7 @@ export class AddUserComponent implements OnInit {
         email: user.email,
         employeeId: user.employeeId,
         department: user.department,
+        managerId: user.managerId,
         role: user.role,
         phone: user.phone || user.phoneno,
         location: user.location,
@@ -83,6 +134,9 @@ export class AddUserComponent implements OnInit {
       }
     }
   }
+
+
+
   
   onSubmit() {
     if (this.userForm.invalid) {
@@ -120,6 +174,12 @@ export class AddUserComponent implements OnInit {
           this.gotoUserList();
         },
         error: (err) => {
+          /* if(err.error.message.includes('Email already exists')) {
+
+           // alert('Email already exists');
+
+          } */
+          
         console.error('Creation failed', err);
           console.log(err.error);
 
