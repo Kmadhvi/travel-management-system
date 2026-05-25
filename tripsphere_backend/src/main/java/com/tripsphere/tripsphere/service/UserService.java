@@ -1,11 +1,14 @@
 package com.tripsphere.tripsphere.service;
 
+import com.tripsphere.tripsphere.dto.LoginRequest;
+import com.tripsphere.tripsphere.dto.LoginResponse;
 import com.tripsphere.tripsphere.dto.UserDTO;
 import com.tripsphere.tripsphere.entity.Role;
 import com.tripsphere.tripsphere.entity.User;
 import com.tripsphere.tripsphere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,8 +22,8 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Page<UserDTO> getAllUsers(
             int page,
@@ -139,6 +142,32 @@ public class UserService {
         return managers.stream().map(this::maptoDTO).collect(Collectors.toList());
     }
 
+//    public LoginResponse login(LoginRequest request) {
+//        User user = repository.findByEmail(request.getEmail())
+//                .orElseThrow(() ->
+//                        new RuntimeException(
+//                                "Invalid email or password"
+//                        )
+//                );
+//
+//        // PASSWORD CHECK
+//        if(!passwordEncoder.matches(
+//                request.getPassword(),
+//                user.getPassword()
+//        )) {
+//
+//            throw new RuntimeException(
+//                    "Invalid email or password"
+//            );
+//        }
+//
+//        UserDTO dto = maptoDTO(user);
+//
+//        return new LoginResponse(
+//                "Login successful",
+//                dto
+//        );
+//    }
 
     public UserDTO maptoDTO(User user){
         UserDTO dto = new UserDTO();

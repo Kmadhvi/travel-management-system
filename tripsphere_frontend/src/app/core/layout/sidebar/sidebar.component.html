@@ -15,14 +15,16 @@
 
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }" class="menu-item" matTooltip="Dashboard"
+      [routerLinkActiveOptions]="{ exact: true }" class="nav-link text-dark d-flex align-items-center" matTooltip="Dashboard"
       [matTooltipDisabled]="!collapsed">
       <mat-icon matListItemIcon>dashboard</mat-icon>
       @if (!collapsed) {
         <span>Dashboard</span>
       }
     </a>
-    <!--    @if (loggedUserdata.role == 'Admin') { -->
+
+      <!-- Users - Only Admin -->
+      @if (canViewUsers()) {
         <a mat-list-item routerLink="/users" routerLinkActive="active-link" class="menu-item" matTooltip="Users"
         [matTooltipDisabled]="!collapsed">
         <mat-icon matListItemIcon>group</mat-icon>
@@ -30,9 +32,10 @@
           <span>Users</span>
         }
       </a>
-    <!-- } -->
+      }
       
-      
+      <!-- Travel Request - Employee, Manager, Admin -->
+      @if (canViewTravelRequest()) {
         <a mat-list-item routerLink="/travel-request" routerLinkActive="active-link" class="menu-item"
           matTooltip="Travel Request" [matTooltipDisabled]="!collapsed">
           <mat-icon matListItemIcon>flight_takeoff</mat-icon>
@@ -40,24 +43,29 @@
           <span>Travel Request</span>
           }
         </a>
+      }
     
-      
+      <!-- My Trips/All Trips - All roles -->
       <a mat-list-item routerLink="/travel-request-list" routerLinkActive="active-link" class="menu-item"
-        matTooltip="My Trips" [matTooltipDisabled]="!collapsed">
+        [matTooltip]="getTripsLabel()" [matTooltipDisabled]="!collapsed">
         <mat-icon matListItemIcon>assignment</mat-icon>
         @if (!collapsed) {
-        <span>My Trips</span>
+        <span>{{ getTripsLabel() }}</span>
         }
       </a>
 
-      <a mat-list-item routerLink="/approvals" routerLinkActive="active-link" class="menu-item" matTooltip="Approvals"
-        [matTooltipDisabled]="!collapsed">
-        <mat-icon matListItemIcon>approval</mat-icon>
-        @if (!collapsed) {
-        <span>Approvals</span>
-        }
-      </a>
+      <!-- Approvals - Manager, Admin, Finance -->
+      @if (canViewApprovals()) {
+        <a mat-list-item routerLink="/approvals" routerLinkActive="active-link" class="menu-item" matTooltip="Approvals"
+          [matTooltipDisabled]="!collapsed">
+          <mat-icon matListItemIcon>approval</mat-icon>
+          @if (!collapsed) {
+          <span>Approvals</span>
+          }
+        </a>
+      }
 
+      <!-- Expenses - All roles -->
       <a mat-list-item routerLink="/expenses" routerLinkActive="active-link" class="menu-item" matTooltip="Expenses"
         [matTooltipDisabled]="!collapsed">
         <mat-icon matListItemIcon>receipt_long</mat-icon>
@@ -66,42 +74,71 @@
         }
       </a>
 
-      <a mat-list-item routerLink="/reports" routerLinkActive="active-link" class="menu-item" matTooltip="Reports"
-        [matTooltipDisabled]="!collapsed">
-        <mat-icon matListItemIcon>bar_chart</mat-icon>
-        @if (!collapsed) {
-        <span>Reports</span>
-        }
-      </a>
-      <a mat-list-item routerLink="/audit-logs" routerLinkActive="active-link" class="menu-item">
-        <mat-icon matListItemIcon>history</mat-icon>
-        @if (!collapsed) {
-        <span>Audit Logs</span>
-        }
-      </a>
-      <a mat-list-item routerLink="/policy-management" routerLinkActive="active-link" class="menu-item">
-        <mat-icon matListItemIcon>policy</mat-icon>
-        @if (!collapsed) {
-        <span>Policies</span>
-        }
-      </a>
+      <!-- Reports - Manager, Admin, Finance -->
+      @if (canViewReports()) {
+        <a mat-list-item routerLink="/reports" routerLinkActive="active-link" class="menu-item" matTooltip="Reports"
+          [matTooltipDisabled]="!collapsed">
+          <mat-icon matListItemIcon>bar_chart</mat-icon>
+          @if (!collapsed) {
+          <span>Reports</span>
+          }
+        </a>
+      }
+
+      <!-- Audit Logs - Admin, Finance -->
+      @if (canViewAuditLogs()) {
+        <a mat-list-item routerLink="/audit-logs" routerLinkActive="active-link" class="menu-item">
+          <mat-icon matListItemIcon>history</mat-icon>
+          @if (!collapsed) {
+          <span>Audit Logs</span>
+          }
+        </a>
+      }
+
+      <!-- Policies - Admin, Finance -->
+      @if (canViewPolicies()) {
+        <a mat-list-item routerLink="/policy-management" routerLinkActive="active-link" class="menu-item">
+          <mat-icon matListItemIcon>policy</mat-icon>
+          @if (!collapsed) {
+          <span>Policies</span>
+          }
+        </a>
+      }
       
     </mat-nav-list>
   </div>
 
   <div class="menu-group bottom-group">
-    @if (!collapsed) {
-    <p class="menu-title">SETTINGS</p>
-    }
+    @if (canViewSettings()) {
+      @if (!collapsed) {
+      <p class="menu-title">SETTINGS</p>
+      }
 
-    <mat-nav-list>
-      <a mat-list-item routerLink="/settings" routerLinkActive="active-link" class="menu-item" matTooltip="Settings"
-        [matTooltipDisabled]="!collapsed">
-        <mat-icon matListItemIcon>settings</mat-icon>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/settings" routerLinkActive="active-link" class="menu-item" matTooltip="Settings"
+          [matTooltipDisabled]="!collapsed">
+          <mat-icon matListItemIcon>settings</mat-icon>
         @if (!collapsed) {
         <span>Settings</span>
         }
       </a>
+    </mat-nav-list>
+    }
+
+    <mat-nav-list>
+    <a
+      mat-list-item
+      class="menu-item"
+      (click)="logout()">
+
+      <mat-icon matListItemIcon>logout</mat-icon>
+
+      @if (!collapsed) {
+        <span>Logout</span>
+      }
+
+    </a>
+
     </mat-nav-list>
   </div>
 </div>
