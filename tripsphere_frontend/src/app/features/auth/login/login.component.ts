@@ -29,7 +29,7 @@ export class LoginComponent {
               private snackBar : MatSnackBar
             ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern('^[a-z0-9](\.?[a-z0-9]){5,}@gmail\.com$')]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]],
     });
   }
@@ -38,7 +38,7 @@ export class LoginComponent {
     if(this.loginForm.valid){
       this.loading = true;
       this.router.navigate(['/dashboard']);
-     /*  this.authService.login(this.loginForm.value).subscribe({
+       this.authService.login(this.loginForm.value).subscribe({
         next: () =>{
           this.snackBar.open('Login Successful! ','Close',{duration: 3000});
           this.router.navigate(['/dashboard']);
@@ -47,7 +47,7 @@ export class LoginComponent {
           this.loading = false;
           this.snackBar.open('Invalid email or password','Close',{duration: 3000});
         }
-      }); */
+      }); 
 
     }
   }

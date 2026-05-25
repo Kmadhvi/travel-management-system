@@ -15,13 +15,13 @@ export const roleGuard: CanActivateFn = (route) => {
   const allowedRoles = route.data?.['roles'] as string[] | undefined;
   if (!allowedRoles || allowedRoles.length === 0) return true;
 
-  //const user = authService.getCurrentUser();
-  // const userRole = user?.role?.toUpperCase().trim();
-  // const allowed = allowedRoles.map(r => r.toUpperCase().trim());
+  const user = authService.getCurrentUser();
+  const userRole = user?.role?.toUpperCase().trim();
+  const allowed = allowedRoles.map(r => r.toUpperCase().trim());
 
-  // if (userRole && allowed.includes(userRole)) {
-  //   return true;
-  // }
+  if (userRole && allowed.includes(userRole)) {
+    return true;
+  }
 
   // Logged in but wrong role — go to dashboard, not login
   router.navigate(['/dashboard']);
