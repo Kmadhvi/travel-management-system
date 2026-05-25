@@ -35,7 +35,7 @@ export const routes: Routes = [
     {
         path:'',
         component: MainLayoutComponent,
-      //  canActivate: [authGuard],
+        canActivate: [authGuard],
         children:[
             {
                 path:'dashboard',
@@ -44,69 +44,87 @@ export const routes: Routes = [
             {
                 path:'travel-request', 
                 component: TravelRequestsComponent,
-                // canActivate:[roleGuard],
-                // data:{roles: ['EMPLOYEE','MANAGER']}
+                canActivate:[roleGuard],
+                
             },
             { 
                 path:'travel-request-list', 
                 component: TravelRequestListComponent,
+                canActivate:[roleGuard],
+                data:{roles: ['EMPLOYEE','MANAGER','FINANCE', 'ADMIN']}
             },
 
             { 
                 path:'expenses', 
                 component: ExpensesComponent,
-                 //canActivate:[authGuard],
+                 canActivate:[roleGuard],
+                data: { roles: [ 'EMPLOYEE', 'MANAGER', 'FINANCE', 'ADMIN'] }
              },
             {
                 path:'add-expense', 
                 component: AddExpenseComponent,
-                 //canActivate:[authGuard],
+                 canActivate:[roleGuard],
+                 data: { roles: ['EMPLOYEE', 'MANAGER', 'FINANCE', 'ADMIN'] }
             },
             { 
                 path:'reports',
-                component: ReportsComponent
+                component: ReportsComponent,
+                canActivate:[roleGuard],
+                data: { roles: ['ADMIN','MANAGER','FINANCE'] }
             },
             {   
                 path:'approvals', 
                 component: ApprovalsComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: ['MANAGER', 'FINANCE', 'ADMIN'] },
             },
             {   
                 path:'profile', 
                 component: ProfileComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: ['EMPLOYEE', 'MANAGER', 'FINANCE', 'ADMIN'] },
             },
             {
                 path:'itinerary/:id',
                 component: ItineraryComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                 data: { roles: [ 'EMPLOYEE', 'MANAGER', 'FINANCE', 'ADMIN'] }
+
             },
             {   path:'users', 
                 component: UsersComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: ['ADMIN','MANAGER', 'FINANCE'] } 
+
             },
             {   path:'add-user', 
                 component: AddUserComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: ['ADMIN'] } 
             },
             {   path:'settings',
                 component: SettingsComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: ['ADMIN','FINANCE','MANAGER'] } 
             },
             {   
                 path:'audit-logs', 
                 component: AuditLogsComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: ['ADMIN','FINANCE','MANAGER'] } 
             },
             {   
                 path:'policy-management', 
                 component: PolicyManagementComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: ['ADMIN','FINANCE'] }
             },
             {
                 path:'request-details/:id',
                 component: RequestDetailsComponent,
-                //canActivate:[authGuard],
+                canActivate:[roleGuard],
+                data: { roles: [ 'EMPLOYEE', 'MANAGER', 'FINANCE', 'ADMIN'] }
+
             },
 
 

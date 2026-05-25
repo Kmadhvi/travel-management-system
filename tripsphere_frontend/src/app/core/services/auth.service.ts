@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   private apiUrl = environment.apiUrl + '/auth';
-
   private currentUserSubject = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpClient) {
@@ -21,19 +20,15 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-      //  const token = response.token || response.accessToken || response.jwt;
-        const userData = response.user || response;
-
-       /*  if (token) {
-          localStorage.setItem('token', token);
-        } */
-        localStorage.setItem('y', 'true');
+        const userData = response.user;
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('isLoggedIn', 'true');
         // Store FULL user object — make sure role is uppercase string
         const user = {
           id: userData.id,
           name: userData.name,
           email: userData.email,
-          role: userData.role?.toUpperCase().trim(),
+          role: userData.role.toUpperCase().trim(), // normalize
           department: userData.department,
           employeeId: userData.employeeId
         };
@@ -81,3 +76,4 @@ export class AuthService {
     return this.getCurrentUser()?.role === 'EMPLOYEE';
   }
 }
+
