@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/services/user.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/breadcrumb/breadcrumb.component';
+
 
 @Component({
   selector: 'app-add-user',
@@ -26,7 +28,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatSnackBarModule],
+    MatSnackBarModule,
+    BreadcrumbComponent],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss'
 })
@@ -39,6 +42,12 @@ export class AddUserComponent implements OnInit {
   managers: any[] = [];
   readonly departments = ['HR', 'Finance', 'IT', 'Operations', 'Sales', 'Marketing'];
   readonly roles = ['ADMIN', 'MANAGER', 'FINANCE', 'EMPLOYEE'];
+
+  breadcrumbItems: BreadcrumbItem[] = [
+    { label: 'Home', icon: 'home', route: '/dashboard' },
+    { label: 'Users', icon: 'people', route: '/user-list' },
+    { label: 'New User', icon: 'person_add', isActive: true }
+  ];
 
   constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router, private location: Location, private userService: UserService, private snackBar: MatSnackBar ) {
     this.userForm = this.fb.group({

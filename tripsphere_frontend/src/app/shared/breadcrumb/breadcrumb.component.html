@@ -1,0 +1,18 @@
+<div class="breadcrumb">
+  <ng-container *ngFor="let item of items; let last = last">
+    <!-- Link item -->
+    <a *ngIf="item.route && !item.isActive" [routerLink]="item.route" class="breadcrumb-link">
+      <mat-icon *ngIf="item.icon" class="breadcrumb-icon">{{ item.icon }}</mat-icon>
+      <span>{{ item.label }}</span>
+    </a>
+
+    <!-- Current/Active item -->
+    <span *ngIf="item.isActive || !item.route" class="breadcrumb-current">
+      <mat-icon *ngIf="item.icon" class="breadcrumb-icon">{{ item.icon }}</mat-icon>
+      <span>{{ item.label }}</span>
+    </span>
+
+    <!-- Divider -->
+    <span *ngIf="!last" class="breadcrumb-divider">/</span>
+  </ng-container>
+</div>

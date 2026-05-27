@@ -1,106 +1,145 @@
-<div class="travel-request-page">
-  <div class="breadcrumb-row">
-    <a href="javascript:void(0)">Home</a>
-    <span>/</span>
-    <span>Travel Request</span>
-  </div>
+<div class="page-container">
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
 
   <div class="page-header">
-    <div>
-      <h1 class="page-title">Create Travel Request</h1>
-      <p class="page-subtitle">
-        Fill in the details below to submit a new employee travel request.
-      </p>
+    <div class="header-content">
+      <h1 class="page-title">Create New Travel Request</h1>
+      <p class="page-subtitle">Submit your trip details for approval. Fill in all required fields marked with *</p>
+    </div>
+  </div>
+
+  <div class="policy-alert" *ngIf="policyWarning">
+    <div class="alert-content">
+      <mat-icon class="alert-icon">warning</mat-icon>
+      <div class="alert-text">
+        <strong>Policy Warning</strong>
+        <p>Budget exceeds company policy limit of ₹{{activePolicy?.maxBudgetPerTrip}}. Your request will still be submitted for approval.</p>
+      </div>
     </div>
   </div>
 
   <mat-card class="form-card">
     <mat-card-content>
-      <form class="request-form">
-        <div class="form-grid">
-          <mat-form-field appearance="outline">
-            <mat-label>Destination</mat-label>
-            <input
-              matInput
-              [(ngModel)]="destination"
-              name="destination"
-              placeholder="Enter destination"
-            />
+      <form [formGroup]="requestForm">
+        <!-- Trip Details Section -->
+        <div class="form-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">info</mat-icon>
+            <h3>Trip Details</h3>
+          </div>
+
+          <div class="grid-2">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Destination *</mat-label>
+              <mat-icon matPrefix>location_on</mat-icon>
+              <input matInput formControlName="destination" placeholder="e.g. London, UK">
+              <mat-error *ngIf="requestForm.get('destination')?.touched && requestForm.get('destination')?.invalid">
+                Destination is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Department *</mat-label>
+              <mat-icon matPrefix>business</mat-icon>
+              <mat-select formControlName="department">
+                <mat-option *ngFor="let dept of departments" [value]="dept">{{dept}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="requestForm.get('department')?.touched && requestForm.get('department')?.invalid">
+                Department is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-2">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Travel Class *</mat-label>
+              <mat-icon matPrefix>airline_seat_recline_extra</mat-icon>
+              <mat-select formControlName="travelClass">
+                <mat-option value="ECONOMY">
+                  <mat-icon>check_circle_outline</mat-icon> Economy
+                </mat-option>
+                <mat-option value="BUSINESS">
+                  <mat-icon>star</mat-icon> Business
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Estimated Budget (₹) *</mat-label>
+              <mat-icon matPrefix>currency_rupee</mat-icon>
+              <input matInput type="number" formControlName="estimatedBudget" (input)="checkPolicy()" placeholder="0">
+              <mat-error *ngIf="requestForm.get('estimatedBudget')?.touched && requestForm.get('estimatedBudget')?.invalid">
+                Valid budget is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Date Section -->
+        <div class="form-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">event</mat-icon>
+            <h3>Travel Dates</h3>
+          </div>
+
+          <div class="grid-2">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Start Date *</mat-label>
+              <mat-icon matPrefix>date_range</mat-icon>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" [min]="today" readonly>
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+              <mat-error *ngIf="requestForm.get('startDate')?.touched && requestForm.get('startDate')?.invalid">
+                Start date is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>End Date *</mat-label>
+              <mat-icon matPrefix>date_range</mat-icon>
+              <input matInput [matDatepicker]="endPicker" formControlName="endDate" [min]="requestForm.get('startDate')?.value || today" readonly>
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+              <mat-error *ngIf="requestForm.get('endDate')?.touched && requestForm.get('endDate')?.invalid">
+                End date is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Purpose & Notes Section -->
+        <div class="form-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">description</mat-icon>
+            <h3>Purpose & Details</h3>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width form-field">
+            <mat-label>Purpose of Travel *</mat-label>
+            <mat-icon matPrefix>notes</mat-icon>
+            <textarea matInput formControlName="purpose" rows="4" placeholder="Describe the purpose of your travel..."></textarea>
+            <mat-error *ngIf="requestForm.get('purpose')?.touched && requestForm.get('purpose')?.invalid">
+              Purpose is required
+            </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Department</mat-label>
-            <mat-select [(ngModel)]="department" name="department">
-              <mat-option value="HR">HR</mat-option>
-              <mat-option value="Finance">Finance</mat-option>
-              <mat-option value="IT">IT</mat-option>
-              <mat-option value="Operations">Operations</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Start Date</mat-label>
-            <input
-              matInput
-              [matDatepicker]="startPicker"
-              [(ngModel)]="startDate"
-              name="startDate"
-            />
-            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-            <mat-datepicker #startPicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>End Date</mat-label>
-            <input
-              matInput
-              [matDatepicker]="endPicker"
-              [(ngModel)]="endDate"
-              name="endDate"
-            />
-            <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
-            <mat-datepicker #endPicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Travel Class</mat-label>
-            <mat-select [(ngModel)]="travelClass" name="travelClass">
-              <mat-option value="Economy">Economy</mat-option>
-              <mat-option value="Business">Business</mat-option>
-              <mat-option value="First Class">First Class</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Estimated Budget</mat-label>
-            <input
-              matInput
-              type="number"
-              [(ngModel)]="budget"
-              name="budget"
-              placeholder="Enter estimated budget"
-            />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Purpose of Travel</mat-label>
-            <textarea
-              matInput
-              rows="5"
-              [(ngModel)]="purpose"
-              name="purpose"
-              placeholder="Enter travel purpose"
-            ></textarea>
+          <mat-form-field appearance="outline" class="full-width form-field">
+            <mat-label>Additional Notes (Optional)</mat-label>
+            <mat-icon matPrefix>add_comment</mat-icon>
+            <textarea matInput formControlName="additionalNotes" rows="3" placeholder="Any additional information or special requests..."></textarea>
           </mat-form-field>
         </div>
 
-        <div class="button-row">
-          <button mat-stroked-button type="button" class="secondary-btn" (click)="saveDraft()">
-            Save Draft
+        <!-- Action Buttons -->
+        <div class="action-row">
+          <button mat-stroked-button type="button" (click)="saveDraft()" [disabled]="loading" class="action-btn">
+            <mat-icon>save</mat-icon>
+            <span>Save as Draft</span>
           </button>
-
-          <button mat-flat-button color="primary" type="button" class="primary-btn" (click)="submitRequest()">
-            Submit Request
+          <button mat-flat-button color="primary" type="button" (click)="submitRequest()" [disabled]="!requestForm.valid || loading" class="action-btn primary">
+            <mat-icon *ngIf="!loading">send</mat-icon>
+            <mat-icon *ngIf="loading" class="spinner">loop</mat-icon>
+            <span>{{loading ? 'Submitting...' : 'Submit Request'}}</span>
           </button>
         </div>
       </form>

@@ -32,7 +32,7 @@ export class SidebarComponent {
   }
 
   canViewTravelRequest(): boolean {
-    return this.authService.isEmployee() || this.authService.isManager() || this.authService.isAdmin();
+    return this.authService.isEmployee() || this.authService.isManager() ;
   }
 
   canViewApprovals(): boolean {

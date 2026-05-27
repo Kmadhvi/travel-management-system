@@ -82,7 +82,7 @@
   border-bottom: 1px solid #f1f5f9;
 }
 
-.status {
+.status-chip {
   display: inline-block;
   padding: 6px 12px;
   border-radius: 999px;
@@ -90,25 +90,31 @@
   font-weight: 600;
 }
 
-.status.pending {
+.status-draft {
   background: #fef3c7;
   color: #92400e;
 }
 
-.status.approved {
+.status-approved {
   background: #dcfce7;
   color: #166534;
 }
 
-.status.draft {
+.status-draft {
   background: #e2e8f0;
   color: #475569;
 }
 
-.status.rejected {
+.status-pending_manager {
   background: #fee2e2;
   color: #991b1b;
 }
+.status-pending_finance { background: #e6f1fb; color: #1d4ed8; }
+.status-rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
 
 @media (max-width: 992px) {
   .table-toolbar {

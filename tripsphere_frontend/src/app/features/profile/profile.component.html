@@ -1,14 +1,30 @@
 <div class="profile-page">
-  <div class="breadcrumb-row">
-    <a href="javascript:void(0)">Home</a>
-    <span>/</span>
-    <span>Profile</span>
-  </div>
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
 
   <div class="page-header">
     <div>
       <h1 class="page-title">My Profile</h1>
-      <p class="page-subtitle">View your account details and profile information.</p>
+      <p class="page-subtitle">View and manage your account details and profile information.</p>
+    </div>
+
+    <div class="header-actions" *ngIf="isAdmin">
+      <button
+        *ngIf="!isEditing"
+        mat-flat-button
+        color="primary"
+        (click)="toggleEdit()"
+        class="edit-btn"
+      >
+        <mat-icon>edit</mat-icon> Edit Profile
+      </button>
+      <div *ngIf="isEditing" class="edit-actions">
+        <button mat-flat-button color="primary" (click)="saveProfile()">
+          <mat-icon>save</mat-icon> Save
+        </button>
+        <button mat-stroked-button (click)="cancelEdit()">
+          <mat-icon>close</mat-icon> Cancel
+        </button>
+      </div>
     </div>
   </div>
 
@@ -22,13 +38,25 @@
 
           <div class="profile-main-info">
             <h2>{{ user.name }}</h2>
-            <p>{{ user.role }} • {{ user.department }}</p>
+            <p class="role-badge">{{ user.role }} • {{ user.department }}</p>
           </div>
         </div>
 
-        <div class="profile-actions">
-          <button mat-flat-button color="primary" >Edit Profile</button>
-          <button mat-stroked-button>Change Password</button>
+        <div class="profile-quick-stats">
+          <div class="stat-item">
+            <mat-icon>flight_takeoff</mat-icon>
+            <div>
+              <span>Requests</span>
+              <strong>24</strong>
+            </div>
+          </div>
+          <div class="stat-item">
+            <mat-icon>receipt_long</mat-icon>
+            <div>
+              <span>Expenses</span>
+              <strong>12</strong>
+            </div>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -39,15 +67,27 @@
         <div class="info-list">
           <div class="info-row">
             <span>Email</span>
-            <strong>{{ user.email }}</strong>
+            <mat-form-field *ngIf="isEditing" appearance="outline" class="edit-field">
+              <mat-label>Email</mat-label>
+              <input matInput [(ngModel)]="editableUser.email">
+            </mat-form-field>
+            <strong *ngIf="!isEditing">{{ user.email }}</strong>
           </div>
           <div class="info-row">
             <span>Phone</span>
-            <strong>{{ user.phone }}</strong>
+            <mat-form-field *ngIf="isEditing" appearance="outline" class="edit-field">
+              <mat-label>Phone</mat-label>
+              <input matInput [(ngModel)]="editableUser.phone">
+            </mat-form-field>
+            <strong *ngIf="!isEditing">{{ user.phone }}</strong>
           </div>
           <div class="info-row">
             <span>Location</span>
-            <strong>{{ user.location }}</strong>
+            <mat-form-field *ngIf="isEditing" appearance="outline" class="edit-field">
+              <mat-label>Location</mat-label>
+              <input matInput [(ngModel)]="editableUser.location">
+            </mat-form-field>
+            <strong *ngIf="!isEditing">{{ user.location }}</strong>
           </div>
         </div>
       </mat-card-content>

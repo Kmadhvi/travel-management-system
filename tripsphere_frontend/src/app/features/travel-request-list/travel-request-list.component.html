@@ -1,9 +1,5 @@
 <div class="travel-request-list-page">
-  <div class="breadcrumb-row">
-    <a href="javascript:void(0)">Home</a>
-    <span>/</span>
-    <span>Travel Request List</span>
-  </div>
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
 
   <div class="page-header">
     <div>
@@ -13,9 +9,11 @@
       </p>
     </div>
 
-    <button mat-flat-button color="primary" routerLink="/travel-request" class="new-request-btn">
+    @if (canCreateRequest()) {
+    <button mat-flat-button color="primary" routerLink="/travel-request" (click)="newRequest()" class="new-request-btn" >
       + New Request
     </button>
+    }
   </div>
 
   <mat-card class="list-card">
@@ -30,17 +28,14 @@
 
         <div class="filter-box">
           <mat-form-field appearance="outline">
-            <mat-label>Status</mat-label>
-            <mat-select>
-              <mat-option value="all">All</mat-option>
-              <mat-option value="pending">Pending</mat-option>
-              <mat-option value="approved">Approved</mat-option>
-              <mat-option value="rejected">Rejected</mat-option>
-              <mat-option value="draft">Draft</mat-option>
-            </mat-select>
+            <mat-label>Filter by Status</mat-label>
+              <mat-select [(value)]="filterStatus" (selectionChange)="applyFilter()">
+               <mat-option *ngFor="let status of statusOptions" [value]="status.value">{{ status.label }}</mat-option>
+              </mat-select>
           </mat-form-field>
         </div>
       </div>
+
 
       <div class="table-responsive">
         <table class="table custom-table align-middle">
@@ -55,57 +50,25 @@
               <th class="text-end">Actions</th>
             </tr>
           </thead>
+
           <tbody>
-            <tr>
-              <td>TR001</td>
-              <td>Mumbai</td>
-              <td>Finance</td>
-              <td>12 Apr - 15 Apr</td>
-              <td>₹15,000</td>
-              <td><span class="status pending">Pending</span></td>
-              <td class="text-end">
-                <button mat-stroked-button (click)="viewRequestDetails('TR002')">
-                  View
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>TR002</td>
-              <td>Delhi</td>
-              <td>HR</td>
-              <td>18 Apr - 20 Apr</td>
-              <td>₹20,000</td>
-              <td><span class="status approved">Approved</span></td>
-              <td class="text-end">
-                <button mat-stroked-button (click)="viewRequestDetails('TR002')">View</button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>TR003</td>
-              <td>Bangalore</td>
-              <td>IT</td>
-              <td>22 Apr - 24 Apr</td>
-              <td>₹12,500</td>
-              <td><span class="status draft">Draft</span></td>
-              <td class="text-end">
-                <button mat-stroked-button (click)="viewRequestDetails('TR002')">View</button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>TR004</td>
-              <td>Pune</td>
-              <td>Operations</td>
-              <td>26 Apr - 28 Apr</td>
-              <td>₹10,800</td>
-              <td><span class="status rejected">Rejected</span></td>
-              <td class="text-end">
-                <button mat-stroked-button (click)="viewRequestDetails('TR002')">View</button>
-              </td>
-            </tr>
-          </tbody>
+              <tr *ngFor="let request of filteredRequests">
+                <td>{{ request.requestNumber }}</td>
+                <td>{{ request.destination }}</td>
+                <td>{{ request.department }}</td>
+                <td> {{ request.startDate | date:'dd MMM' }}
+                  -
+                  {{ request.endDate | date:'dd MMM' }}
+                </td>
+                <td>₹{{ request.estimatedBudget | number }}</td>
+                <td><span class="status" [ngClass]="getStatusClass(request.status)">{{ getStatusLabel(request.status) }}</span></td>
+                <td class="text-end">
+                  <button mat-stroked-button (click)="viewRequestDetails(request.id)">
+                    View
+                  </button>
+                </td>
+              </tr>
+            </tbody>
         </table>
       </div>
     </mat-card-content>
