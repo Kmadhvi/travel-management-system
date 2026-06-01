@@ -15,6 +15,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TravelRequestService } from '../../core/services/travel-request.service';
 import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/breadcrumb/breadcrumb.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-travel-requests',
@@ -73,9 +74,13 @@ export class TravelRequestsComponent implements OnInit {
 
   ngOnInit(): void {
     // Load policy if needed
-    // this.loadPolicy();
+    this.loadPolicy();
   }
-
+  loadPolicy() {
+    this.http.get<any>(`${environment.apiUrl}/policies/active`).subscribe(p => {
+      this.activePolicy = p;
+    });
+  }
   checkPolicy(): void {
     // Check if budget exceeds policy limits
     const budget = this.requestForm.get('estimatedBudget')?.value;
@@ -85,6 +90,7 @@ export class TravelRequestsComponent implements OnInit {
       this.policyWarning = false;
     }
   }
+
 
   saveDraft(): void {
     if (this.requestForm.valid) {

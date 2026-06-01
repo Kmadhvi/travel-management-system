@@ -10,6 +10,7 @@ export class UserService {
     console.log(this.api);
   }
   
+
   getUsers(page: number, size: number) {
       return this.http.get<any>(`${this.api}/getusers?page=${page}&size=${size}`);
   }
@@ -26,5 +27,6 @@ export class UserService {
     return this.http.get<any[]>(
     `${this.api}/managers/${department}`
   );
+  
 }
 }

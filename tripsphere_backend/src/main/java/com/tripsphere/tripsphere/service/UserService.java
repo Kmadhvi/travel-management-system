@@ -1,5 +1,6 @@
 package com.tripsphere.tripsphere.service;
 
+import com.tripsphere.tripsphere.dto.CreateUserRequest;
 import com.tripsphere.tripsphere.dto.LoginRequest;
 import com.tripsphere.tripsphere.dto.LoginResponse;
 import com.tripsphere.tripsphere.dto.UserDTO;
@@ -25,11 +26,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Page<UserDTO> getAllUsers(
-            int page,
-            int size
-    ) {
-
+    public Page<UserDTO> getAllUsers(int page, int size) {
         Pageable pageable =
                 PageRequest.of(page, size);
 
@@ -39,8 +36,13 @@ public class UserService {
         return users.map(this::maptoDTO);
     }
 
+    public UserDTO getUserByEmail(String email) {
+        User user = repository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-    public UserDTO createUser(UserDTO dto) {
+        return maptoDTO(user);
+    }
+    public UserDTO createUser(CreateUserRequest dto) {
         // EMAIL VALIDATION
         if(repository.existsByEmail(dto.getEmail())) {
             throw new RuntimeException(
@@ -54,13 +56,12 @@ public class UserService {
         user.setEmail(dto.getEmail());
         user.setRole(dto.getRole());
         user.setDepartment(dto.getDepartment());
-        user.setEmployeeId(dto.getEmployeeId());
         user.setPhone(dto.getPhone());
         user.setLocation(dto.getLocation());
-        user.setPassword("admin@123");
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+
         // Set manager
         if(dto.getManagerId() != null) {
-
             User manager = repository.findById(dto.getManagerId())
                     .orElseThrow(() ->
                             new RuntimeException(
@@ -69,6 +70,13 @@ public class UserService {
             user.setManager(manager);
         }
         User savedUser = repository.save(user);
+
+        String employeeId = "EMP" + String.format("%04d", savedUser.getId());
+        savedUser.setEmployeeId(employeeId);
+
+        // 4. SECOND SAVE: Persist the generated employeeId back to the database
+        savedUser = repository.save(savedUser);
+
         return maptoDTO(savedUser);
 
     }
@@ -83,9 +91,20 @@ public class UserService {
         user.setEmail(userDetails.getEmail());
         user.setRole(userDetails.getRole());
         user.setDepartment(userDetails.getDepartment());
-        user.setEmployeeId(userDetails.getEmployeeId());
+        if(userDetails.getEmployeeId() != null) {
+            String employeeId = "EMP"
+                    + String.format(
+                    "%03d",
+                    userDetails.getId()
+            );
+            user.setEmployeeId(employeeId);
+        }
+
         user.setPhone(userDetails.getPhone());
         user.setLocation(userDetails.getLocation());
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         if(id.equals(userDetails.getManagerId())) {
 
             throw new RuntimeException(
@@ -111,6 +130,11 @@ public class UserService {
 
         User updatedUser = repository.save(user);
 
+        String employeeId = "EMP" + String.format("%03d", updatedUser.getId());
+        updatedUser.setEmployeeId(employeeId);
+
+        updatedUser = repository.save(updatedUser);
+
         return maptoDTO(updatedUser);
     }
 
@@ -118,56 +142,29 @@ public class UserService {
         repository.deleteById(id);
     }
 
-//    public UserDTO updateMyProfile(String email, UserDTO dto) {
-//        User user = repository.findByEmail(email).orElseThrow();
-//        user.setName(dto.getName());
-//        user.setPhone(dto.getPhone());
-//        user.setDepartment(dto.getDepartment());
-//        user.setLocation(dto.getLocation());
-//        return maptoDTO(repository.save(user));
-//    }
+    public UserDTO updateMyProfile(String email, UserDTO dto) {
+        User user = repository.findByEmail(email).orElseThrow();
+        user.setName(dto.getName());
+        user.setPhone(dto.getPhone());
+        user.setDepartment(dto.getDepartment());
+        user.setLocation(dto.getLocation());
+        return maptoDTO(repository.save(user));
+    }
 
-//    public boolean changePassword(String email, String currentPassword, String newPassword) {
-//        User user = repository.findByEmail(email).orElseThrow();
-//        if (currentPassword != user.getPassword()) {
-//            user.setPassword(newPassword);
-//            repository.save(user);
-//            return true;
-//        }
-//        return false;
-//    }
+    public boolean changePassword(String email, String currentPassword, String newPassword) {
+        User user = repository.findByEmail(email).orElseThrow();
+        if (currentPassword != user.getPassword()) {
+            user.setPassword(newPassword);
+            repository.save(user);
+            return true;
+        }
+        return false;
+    }
 
     public List<UserDTO> getManagersByDepartment(String department) {
         List<User> managers = repository.findByRoleAndDepartment(Role.MANAGER,department);
         return managers.stream().map(this::maptoDTO).collect(Collectors.toList());
     }
-
-//    public LoginResponse login(LoginRequest request) {
-//        User user = repository.findByEmail(request.getEmail())
-//                .orElseThrow(() ->
-//                        new RuntimeException(
-//                                "Invalid email or password"
-//                        )
-//                );
-//
-//        // PASSWORD CHECK
-//        if(!passwordEncoder.matches(
-//                request.getPassword(),
-//                user.getPassword()
-//        )) {
-//
-//            throw new RuntimeException(
-//                    "Invalid email or password"
-//            );
-//        }
-//
-//        UserDTO dto = maptoDTO(user);
-//
-//        return new LoginResponse(
-//                "Login successful",
-//                dto
-//        );
-//    }
 
     public UserDTO maptoDTO(User user){
         UserDTO dto = new UserDTO();

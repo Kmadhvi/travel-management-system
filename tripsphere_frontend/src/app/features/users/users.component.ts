@@ -11,6 +11,7 @@ import { UserService } from '../../core/services/user.service';
 import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BreadcrumbComponent,BreadcrumbItem } from '../../shared/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-users',
@@ -24,7 +25,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FormsModule,
     MatSnackBarModule,
     MatIconModule,
-    MatPaginatorModule 
+    MatPaginatorModule ,
+    BreadcrumbComponent
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
@@ -39,6 +41,10 @@ export class UsersComponent implements OnInit {
   page = 0;
   size = 5;
 totalElements = 0;
+  breadcrumbItems: BreadcrumbItem[] = [
+    { label: 'Home', icon: 'home', route: '/dashboard' },
+    { label: 'Users', icon: 'people', isActive: true  }
+  ];
   readonly roles = ['ALL', 'ADMIN', 'MANAGER', 'FINANCE', 'EMPLOYEE'];  
   readonly departments = ['HR', 'Finance', 'IT', 'Operations', 'Sales', 'Marketing'];
   constructor (private router:Router , private userService: UserService, private snackBar: MatSnackBar){}

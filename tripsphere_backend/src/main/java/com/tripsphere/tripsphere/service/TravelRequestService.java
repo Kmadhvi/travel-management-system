@@ -68,20 +68,22 @@ public class TravelRequestService {
             request.setStatus(TravelRequest.RequestStatus.DRAFT);
         }
 
-        // Auto-generate request number: TR + year + sequence
-        long requestCount = travelRepository.count() + 1;
+        request.setCreatedAt(LocalDateTime.now());
+        request.setUpdatedAt(LocalDateTime.now());
+        request.setRequestNumber(
+                "TR" + System.currentTimeMillis()
+        );
+        TravelRequest saved = travelRepository.save(request);
 
         String requestNumber = "TR"
                 + LocalDate.now().getYear()
                 + "-"
-                + String.format("%04d", requestCount);
+                + String.format("%04d", saved.getId());
 
-        request.setRequestNumber(requestNumber);
+        saved.setRequestNumber(requestNumber);
 
-        request.setCreatedAt(LocalDateTime.now());
-        request.setUpdatedAt(LocalDateTime.now());
+        saved = travelRepository.save(saved);
 
-        TravelRequest saved = travelRepository.save(request);
         return mapToDTO(saved);
     }
 
