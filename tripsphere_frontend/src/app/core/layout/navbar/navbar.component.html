@@ -5,12 +5,14 @@
     </button>
 
     <a class="top-link active">Dashboard</a>
-    <a class="top-link" routerLink="/users" routerLinkActive="active-link">Users</a>
-    <a class="top-link" routerLink="/settings" routerLinkActive="active-link">Settings</a>
+    @if(canViewUsersandSettings()){
+      <a class="top-link" routerLink="/users" routerLinkActive="active-link">Users</a>
+      <a class="top-link" routerLink="/settings" routerLinkActive="active-link">Settings</a>
+    }
   </div>
 
   <div class="nav-right">
-    <button mat-icon-button>
+    <!-- <button mat-icon-button>
       <mat-icon>notifications_none</mat-icon>
     </button>
 
@@ -26,14 +28,21 @@
 
     <button mat-icon-button>
       <mat-icon>light_mode</mat-icon>
-    </button>
-
-    <div class="profile-box">
-      <div class="profile-avatar">M</div>
-      <div class="profile-info">
-        <a routerLink="/profile" routerLinkActive="active-link"><span class="profile-name">Madhvi</span></a>
-        <span class="profile-role">Admin</span>
+    </button> -->
+    <mat-toolbar color="primary" class="navbar">
+      <div class="profile-box">
+        <div class="profile-avatar">{{ getInitials() }}</div>
+        <div class="profile-info">
+          <a routerLink="/profile" routerLinkActive="active-link"><span class="profile-name">{{ getCurrentUser().name }}</span></a>
+          <span class="profile-role">{{ getCurrentUser().role }}</span>
+        </div>
       </div>
-    </div>
+        <span class="spacer"></span>
+        <span class="spacer"></span>
+       <button mat-icon-button (click)="logout()" title="Logout">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+    
   </div>
 </mat-toolbar>

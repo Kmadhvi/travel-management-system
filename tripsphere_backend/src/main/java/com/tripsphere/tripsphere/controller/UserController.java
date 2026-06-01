@@ -1,7 +1,8 @@
 package com.tripsphere.tripsphere.controller;
 
+import com.tripsphere.tripsphere.dto.CreateUserRequest;
+import com.tripsphere.tripsphere.dto.PasswordChangeDTO;
 import com.tripsphere.tripsphere.dto.UserDTO;
-import com.tripsphere.tripsphere.entity.User;
 import com.tripsphere.tripsphere.security.JwtUtil;
 import com.tripsphere.tripsphere.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("api/users")
@@ -26,15 +25,28 @@ public class UserController {
     @Autowired
     private JwtUtil jwtUtil;
 
-//    @GetMapping("/me")
-//    public ResponseEntity<?> getMyProfile(HttpServletRequest request){
-//        String token = request.getHeader("Authorization").substring(7);
-//        String email = jwtUtil.extractUsername(token);
-//        return ResponseEntity.ok(service.getAllUsers().stream()
-//                .filter(u -> u.getEmail().equals(email))
-//                .findFirst()
-//                .orElseThrow());
-//    }
+    @GetMapping("/me")
+    public ResponseEntity<?> getMyProfile(HttpServletRequest request){
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.extractUsername(token);
+        return ResponseEntity.ok(service.getUserByEmail(email));
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<?> updateMyProfile(@RequestBody UserDTO dto, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.extractUsername(token);
+        return ResponseEntity.ok(service.updateMyProfile(email, dto));
+    }
+
+    @PutMapping("/me/password")
+    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeDTO dto, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.extractUsername(token);
+        boolean success = service.changePassword(email, dto.getCurrentPassword(), dto.getNewPassword());
+        if (!success) return ResponseEntity.badRequest().body("Current password is incorrect.");
+        return ResponseEntity.ok().body("{\"message\": \"Password changed successfully.\"}");
+    }
 
     @GetMapping("/getusers")
     public ResponseEntity<Page<UserDTO>> getAllUsers(@RequestParam(defaultValue = "0")int page,@RequestParam(defaultValue = "5") int size) {
@@ -42,8 +54,8 @@ public class UserController {
     }
 
     @PostMapping("add-user")
-    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(service.createUser(userDTO));
+    public ResponseEntity<?> createUser(@RequestBody CreateUserRequest createUserRequest) {
+        return ResponseEntity.ok(service.createUser(createUserRequest));
     }
 
     @PutMapping("update-user/{id}")

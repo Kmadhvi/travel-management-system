@@ -1,54 +1,345 @@
 <div class="details-page">
+  <!-- Breadcrumb Navigation -->
   <div class="breadcrumb-row">
-    <a href="javascript:void(0)">Home</a>
+    <a routerLink="/dashboard">Home</a>
     <span>/</span>
-    <a href="javascript:void(0)">Travel Request List</a>
+    <a routerLink="/travel-request-list">Travel Requests</a>
     <span>/</span>
     <span>Request Details</span>
   </div>
 
+  <!-- Page Header -->
   <div class="page-header">
     <div>
-      <h1 class="page-title">Request Details - {{ requestId }}</h1>
+      <h1 class="page-title">Request Details - ID: {{ requestData?.id }}</h1>
       <p class="page-subtitle">View complete request, approval, itinerary, and expense information.</p>
+    </div>
+    <div class="status-badge" [ngClass]="getStatusBadgeClass(requestData?.status)">
+      {{ requestData?.status | replace: '_' : ' ' }}
     </div>
   </div>
 
+  <!-- Loading State -->
+  @if (loading) {
+    <div class="loading-state">Loading...</div>
+  }
+
+  <!-- Main Details Grid -->
   <div class="details-grid">
+    <!-- Basic Details Card -->
     <mat-card class="details-card">
       <mat-card-content>
-        <h3>Basic Details</h3>
-        <p><strong>Destination:</strong> Mumbai</p>
-        <p><strong>Dates:</strong> 12 Apr - 15 Apr</p>
-        <p><strong>Purpose:</strong> Client meeting and project review</p>
-        <p><strong>Budget:</strong> ₹15,000</p>
+        <h3>
+          <mat-icon>info</mat-icon>
+          Basic Details
+        </h3>
+        <div class="detail-row">
+          <label>Destination:</label>
+          <span>{{ requestData?.destination || 'N/A' }}</span>
+        </div>
+        <div class="detail-row">
+          <label>From Date:</label>
+          <span>{{ requestData?.startDate || 'N/A' }}</span>
+        </div>
+        <div class="detail-row">
+          <label>To Date:</label>
+          <span>{{ requestData?.endDate || 'N/A' }}</span>
+        </div>
+        <div class="detail-row">
+          <label>Purpose:</label>
+          <span>{{ requestData?.purpose || 'N/A' }}</span>
+        </div>
+        <div class="detail-row">
+          <label>Budget:</label>
+          <span>₹{{ requestData?.estimatedBudget }}</span>
+        </div>
+        <div class="detail-row">
+          <label>Requested by:</label>
+          <span>{{ requestData?.employeeName || 'N/A' }}</span>
+        </div>
       </mat-card-content>
     </mat-card>
 
+    <!-- Approval History Card -->
     <mat-card class="details-card">
       <mat-card-content>
-        <h3>Approval History</h3>
-        <p><strong>Manager Approval:</strong> Approved</p>
-        <p><strong>Finance Approval:</strong> Pending</p>
+        <h3>
+          <mat-icon>done_all</mat-icon>
+          Approval History
+        </h3>
+        <div class="approval-timeline">
+          <div class="approval-item" [class.completed]="requestData?.managerComment">
+            <div class="approval-status">
+              @if (requestData?.managerComment) {
+                <mat-icon class="icon-approved">check_circle</mat-icon>
+              } @else {
+                <mat-icon class="icon-pending">schedule</mat-icon>
+              }
+            </div>
+            <div class="approval-info">
+              <label>Manager Approval:</label>
+              @if (requestData?.managerComment) {
+                <p class="text-success">✓ Approved by Manager</p>
+                <p class="comment">{{ requestData?.managerComment }}</p>
+              } @else {
+                <p class="text-pending">Pending</p>
+              }
+            </div>
+          </div>
+
+          <div class="approval-item" [class.completed]="requestData?.financeComment">
+            <div class="approval-status">
+              @if (requestData?.financeComment) {
+                <mat-icon class="icon-approved">check_circle</mat-icon>
+              } @else {
+                <mat-icon class="icon-pending">schedule</mat-icon>
+              }
+            </div>
+            <div class="approval-info">
+              <label>Finance Approval:</label>
+              @if (requestData?.financeComment) {
+                <p class="text-success">✓ Approved by Finance</p>
+                <p class="comment">{{ requestData?.financeComment }}</p>
+              } @else {
+                <p class="text-pending">Pending</p>
+              }
+            </div>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
 
+    <!-- Itinerary Card -->
     <mat-card class="details-card">
       <mat-card-content>
-        <h3>Linked Itinerary</h3>
-        <p>Flight: Ahmedabad → Mumbai</p>
-        <p>Hotel: Taj Hotel</p>
-        <button mat-stroked-button (click)="goToItinerary(requestId)">View Itinerary</button>
+        <div class="card-header">
+          <h3>
+            <mat-icon>schedule</mat-icon>
+            Linked Itinerary
+          </h3>
+          @if (canAddItinerary()) {
+            <button mat-icon-button (click)="openAddItinerary()" class="add-button" title="Add/Edit Itinerary">
+              <mat-icon>{{ itineraryData ? 'edit' : 'add' }}</mat-icon>
+            </button>
+          }
+        </div>
+
+        @if (itineraryData) {
+          <div class="itinerary-content">
+            <div class="itinerary-section">
+              <label>Travel Segments:</label>
+              @for (segment of itineraryData?.segments; track $index) {
+                <div class="segment-item">
+                  <span class="segment-type">{{ segment.type }}</span>
+                  <span class="segment-route">{{ segment.from }} → {{ segment.to }}</span>
+                  <span class="segment-time">{{ segment.time }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="itinerary-section">
+              <label>Stay Details:</label>
+              <p><strong>Hotel:</strong> {{ itineraryData?.stay?.hotel }}</p>
+              <p><strong>Check-in:</strong> {{ itineraryData?.stay?.checkIn }}</p>
+              <p><strong>Check-out:</strong> {{ itineraryData?.stay?.checkOut }}</p>
+            </div>
+
+            @if (itineraryData?.notes) {
+              <div class="itinerary-section">
+                <label>Notes:</label>
+                <p>{{ itineraryData?.notes }}</p>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-data">
+            <p>No itinerary added yet</p>
+            @if (canAddItinerary()) {
+              <button mat-raised-button color="primary" (click)="openAddItinerary()" class="add-button">
+                <mat-icon>add</mat-icon>
+                Add Itinerary
+              </button>
+            } @else {
+              <p class="help-text">Itinerary can be added after the request is approved</p>
+            }
+          </div>
+        }
       </mat-card-content>
     </mat-card>
 
+    <!-- Linked Expenses Card -->
     <mat-card class="details-card">
       <mat-card-content>
-        <h3>Linked Expenses</h3>
-        <p>Transport - ₹3,500</p>
-        <p>Food - ₹2,200</p>
-        <button mat-stroked-button (click)="goToAddexpenses()">Add Expense</button>
+        <div class="card-header">
+          <h3>
+            <mat-icon>receipt</mat-icon>
+            Linked Expenses
+          </h3>
+          @if (requestData?.status === 'APPROVED') {
+            <button mat-icon-button routerLink="/add-expense" [queryParams]="{requestId: requestData?.id}" class="add-button" title="Add Expense">
+              <mat-icon>add</mat-icon>
+            </button>
+          }
+        </div>
+
+        @if (requestData?.expenses && requestData?.expenses.length > 0) {
+          <div class="expenses-list">
+            @for (expense of requestData?.expenses; track $index) {
+              <div class="expense-item">
+                <span class="expense-category">{{ expense.category }}</span>
+                <span class="expense-amount">₹{{ expense.amount | number:'1.2-2' }}</span>
+              </div>
+            }
+            <div class="expense-total">
+              <span>Total:</span>
+              <span>₹{{ calculateTotalExpenses() | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        } @else {
+          <div class="no-data">
+            <p>No expenses added yet</p>
+            @if (requestData?.status === 'APPROVED') {
+              <button mat-raised-button color="primary" routerLink="/add-expense" [queryParams]="{requestId: requestData?.id}" class="add-button">
+                <mat-icon>add</mat-icon>
+                Add Expense
+              </button>
+            }
+          </div>
+        }
       </mat-card-content>
     </mat-card>
   </div>
+
+  <!-- Approval Actions (if user is Manager or Finance and request is pending) -->
+  @if (canManagerAct() || canFinanceAct()) {
+    <mat-card class="action-card">
+      <mat-card-content>
+        <h3>{{ canManagerAct() ? 'Manager Approval' : 'Finance Approval' }}</h3>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Add Comment</mat-label>
+          <textarea matInput [(ngModel)]="approvalComment" rows="4" placeholder="Add your approval or rejection comment..."></textarea>
+        </mat-form-field>
+
+        <div class="action-buttons">
+          <button mat-raised-button color="primary" (click)="canManagerAct() ? approveAsManager() : approveAsFinance()" [disabled]="loading">
+            <mat-icon>done</mat-icon>
+            Approve
+          </button>
+          <button mat-raised-button color="warn" (click)="rejectRequest()" [disabled]="loading || !approvalComment">
+            <mat-icon>close</mat-icon>
+            Reject
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  } @else if (requestData?.status === 'PENDING_FINANCE' || requestData?.status === 'APPROVED' || requestData?.status === 'REJECTED') {
+    <mat-card class="action-card success-card">
+      <mat-card-content>
+        <div class="success-state">
+          @if (requestData?.status === 'APPROVED') {
+            <mat-icon class="success-icon">check_circle</mat-icon>
+            <h3>Request Approved</h3>
+            <p>All approvals are complete. You can now add itinerary and expenses.</p>
+          } @else if (requestData?.status === 'REJECTED') {
+            <mat-icon class="reject-icon">cancel</mat-icon>
+            <h3>Request Rejected</h3>
+            <p>This request has been rejected. Please contact your manager for details.</p>
+          } @else if (requestData?.status === 'PENDING_FINANCE') {
+            <mat-icon class="pending-icon">schedule</mat-icon>
+            <h3>Awaiting Finance Approval</h3>
+            <p>Your request has been approved by your manager and is now pending finance approval.</p>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Add/Edit Itinerary Modal -->
+  @if (showAddItinerary) {
+    <div class="modal-overlay" (click)="closeAddItinerary()">
+      <mat-card class="itinerary-modal" (click)="$event.stopPropagation()">
+        <mat-card-header>
+          <h2>{{ itineraryData ? 'Edit' : 'Add' }} Itinerary</h2>
+          <button mat-icon-button (click)="closeAddItinerary()" class="close-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+          <!-- Travel Segments -->
+          <div class="form-section">
+            <h4>Travel Segments</h4>
+            @for (segment of itineraryFormData.segments; track $index) {
+              <div class="segment-form">
+                <mat-form-field appearance="fill">
+                  <mat-label>Segment Type</mat-label>
+                  <input matInput [(ngModel)]="segment.type" placeholder="e.g., Flight, Train, Car">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>From</mat-label>
+                  <input matInput [(ngModel)]="segment.from" placeholder="Starting location">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>To</mat-label>
+                  <input matInput [(ngModel)]="segment.to" placeholder="Destination">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Time</mat-label>
+                  <input matInput [(ngModel)]="segment.time" placeholder="e.g., 10:00 AM">
+                </mat-form-field>
+
+                @if (itineraryFormData.segments.length > 1) {
+                  <button mat-icon-button color="warn" (click)="removeSegment($index)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                }
+              </div>
+            }
+            <button mat-stroked-button (click)="addSegment()" class="add-segment-btn">
+              <mat-icon>add</mat-icon>
+              Add Segment
+            </button>
+          </div>
+
+          <!-- Stay Details -->
+          <div class="form-section">
+            <h4>Stay Details</h4>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Hotel/Accommodation</mat-label>
+              <input matInput [(ngModel)]="itineraryFormData.hotel" placeholder="Hotel name">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Check-in Date</mat-label>
+              <input matInput [(ngModel)]="itineraryFormData.checkIn" placeholder="Date or description">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Check-out Date</mat-label>
+              <input matInput [(ngModel)]="itineraryFormData.checkOut" placeholder="Date or description">
+            </mat-form-field>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-section">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Notes</mat-label>
+              <textarea matInput [(ngModel)]="itineraryFormData.notes" rows="3" placeholder="Any additional notes..."></textarea>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button (click)="closeAddItinerary()">Cancel</button>
+          <button mat-raised-button color="primary" (click)="saveItinerary()">
+            <mat-icon>save</mat-icon>
+            Save Itinerary
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
 </div>

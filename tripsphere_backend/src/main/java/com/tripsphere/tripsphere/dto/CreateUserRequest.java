@@ -1,12 +1,14 @@
 package com.tripsphere.tripsphere.dto;
 
 import com.tripsphere.tripsphere.entity.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserDTO  {
+public class CreateUserRequest {
     private Long id;
     private String name;
     private String email;
@@ -16,7 +18,5 @@ public class UserDTO  {
     private String phone;
     private String location;
     private Long managerId;
-    private String managerName;
-
-
+    private String password;
 }
