@@ -53,7 +53,6 @@ export class AddUserComponent implements OnInit {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      employeeId: ['', Validators.required],
       department: [''],
       role: [''],
       phone: ['', [Validators.required, /* Validators.pattern('^[0-9]{10}$') */]],

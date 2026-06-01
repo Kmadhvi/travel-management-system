@@ -100,7 +100,26 @@ export class TravelRequestListComponent implements OnInit {
      return status?.replace(/_/g, ' ')?.toLowerCase()?.replace(/\b\w/g, char => char.toUpperCase()) || status;
   }
 
-   canCreateRequest(): boolean {
+  canCreateRequest(): boolean {
     return this.authService.isEmployee() || this.authService.isManager();
+  }
+
+  submitDraftToManager(request: any): void {
+    if (request.status === 'DRAFT') {
+      this.travelService.submit(request.id).subscribe({
+        next: () => {
+          this.snackBar.open('Request submitted to manager successfully!', 'Close', { duration: 3000 });
+          this.loadRequests();
+        },
+        error: (err) => {
+          console.error(err);
+          this.snackBar.open('Failed to submit request. Please try again.', 'Close', { duration: 3000 });
+        }
+      });
+    }
+  }
+
+  isDraftStatus(status: string): boolean {
+    return status === 'DRAFT';
   }
 }

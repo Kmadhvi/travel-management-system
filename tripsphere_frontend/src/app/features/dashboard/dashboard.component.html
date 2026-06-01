@@ -1,6 +1,8 @@
 <div class="dashboard-page">
   <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
-
+  
+  <h2 class="fw-bold text-dark mb-1">Dashboard</h2>
+  <p class="text-muted">Welcome back, <span class="text-primary fw-semibold">{{ user?.name }}</span>!</p>
   <div class="stats-grid">
     <mat-card class="stat-card purple-card">
       <mat-card-content>
@@ -63,28 +65,6 @@
     </mat-card>
   </div>
 
-  <mat-card class="chart-card">
-    <mat-card-content>
-      <div class="chart-header">
-        <div>
-          <h3>Travel Request Trends</h3>
-          <p>January - December 2026</p>
-        </div>
-
-        <div class="chart-actions">
-          <button mat-stroked-button>Week</button>
-          <button mat-flat-button color="primary">Month</button>
-          <button mat-stroked-button>Year</button>
-        </div>
-      </div>
-
-      <div class="chart-placeholder">
-        <div class="chart-line blue-line"></div>
-        <div class="chart-line green-line"></div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
   <div class="bottom-grid">
     <mat-card class="table-card">
       <mat-card-content>
@@ -138,10 +118,9 @@
         </div>
 
         <div class="quick-actions">
-          <button mat-flat-button color="primary">Create Request</button>
-          <button mat-stroked-button>Submit Expense</button>
-          <button mat-stroked-button>Check Status</button>
-          <button mat-stroked-button>Download Report</button>
+          <button mat-flat-button color="primary" (click)="gotoCreateReq()">Create Request</button>
+          <button mat-stroked-button (click)="gotoSubmitExpense()">Submit Expense</button>
+          <button mat-stroked-button (click)="gotoCheckStatus()">Check Status</button>
         </div>
       </mat-card-content>
     </mat-card>

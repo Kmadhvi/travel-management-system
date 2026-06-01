@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { BreadcrumbComponent, BreadcrumbItem } from '../../shared/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-add-expense',
@@ -21,7 +22,8 @@ import { ActivatedRoute } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    RouterLink
+    RouterLink,
+    BreadcrumbComponent
 ],
   templateUrl: './add-expense.component.html',
   styleUrl: './add-expense.component.scss'
@@ -31,6 +33,12 @@ export class AddExpenseComponent {
   selectedFileName = '';
 
   requestDetails: any = null;
+
+   breadcrumbItems: BreadcrumbItem[] = [
+    { label: 'Home', icon: 'home', route: '/dashboard' },
+    { label: 'Expenses', icon: 'payments', route: '/expenses' },
+    { label: 'New Expense', icon: 'receipt', isActive: true }
+  ];
 
   requestsData: any[] = [
     {

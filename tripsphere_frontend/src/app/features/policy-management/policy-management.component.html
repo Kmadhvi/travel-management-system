@@ -7,98 +7,124 @@
       <p class="page-subtitle">Configure travel and expense policy rules for the organization.</p>
     </div>
 
-    <button mat-flat-button color="primary" (click)="savePolicy()" [disabled]="!isAdmin" class="save-btn">
-      <mat-icon>save</mat-icon> Save Changes
+    <button mat-flat-button color="primary" (click)="savePolicy()" [disabled]="!isAdmin || saving || loading" class="save-btn">
+      <mat-icon *ngIf="!saving">save</mat-icon>
+      <mat-icon *ngIf="saving" class="spinner">loop</mat-icon>
+      {{ saving ? 'Saving...' : 'Save Changes' }}
     </button>
   </div>
 
+  @if (loading) {
+  <div class="loading-container">
+    <div class="spinner-border text-primary"></div>
+    <p>Loading policy...</p>
+  </div>
+  } @else if (policy) {
   <div class="policy-grid">
-    <mat-card class="policy-card travel-card">
-      <mat-card-content>
-        <div class="card-header">
-          <mat-icon class="card-icon">flight_takeoff</mat-icon>
-          <h3>Travel Rules</h3>
-        </div>
-        <div class="rule-item">
-          <div class="rule-label">
-            <mat-icon class="rule-icon">trending_up</mat-icon>
-            <span>Budget Limit per Trip</span>
+    <form [formGroup]="policyForm">
+      <mat-card class="policy-card travel-card">
+        <mat-card-content>
+          <div class="card-header">
+            <mat-icon class="card-icon">flight_takeoff</mat-icon>
+            <h3>Travel Rules</h3>
           </div>
-          <mat-form-field appearance="outline" class="edit-field">
-            <mat-label>Budget Amount</mat-label>
-            <input matInput type="number" [(ngModel)]="policy.budgetLimit" [disabled]="!isAdmin">
-            <span matSuffix>₹</span>
-          </mat-form-field>
-        </div>
-        <div class="rule-item">
-          <div class="rule-label">
-            <mat-icon class="rule-icon">local_offer</mat-icon>
-            <span>Allowed Travel Class</span>
+          <div class="rule-item">
+            <div class="rule-label">
+              <mat-icon class="rule-icon">trending_up</mat-icon>
+              <span>Budget Limit per Trip</span>
+            </div>
+            
+            <mat-form-field appearance="outline" class="edit-field">
+              <mat-label>Budget Amount</mat-label>
+              <input matInput type="number" formControlName="budgetLimit" [disabled]="!isAdmin">
+              <span matSuffix>₹</span>
+              <mat-error *ngIf="policyForm.get('budgetLimit')?.invalid">
+                Budget is required and must be >= 0
+              </mat-error>
+            </mat-form-field>
           </div>
-          <mat-form-field appearance="outline" class="edit-field">
-            <mat-label>Travel Class</mat-label>
-            <input matInput [(ngModel)]="policy.allowedTravelClass" [disabled]="!isAdmin">
-          </mat-form-field>
-        </div>
-        <div class="rule-item">
-          <div class="rule-label">
-            <mat-icon class="rule-icon">calendar_today</mat-icon>
-            <span>Max Advance Booking Days</span>
+          <div class="rule-item">
+            <div class="rule-label">
+              <mat-icon class="rule-icon">local_offer</mat-icon>
+              <span>Allowed Travel Class</span>
+            </div>
+            <mat-form-field appearance="outline" class="edit-field">
+              <mat-label>Travel Class</mat-label>
+              <input matInput formControlName="allowedTravelClass" [disabled]="!isAdmin">
+              <mat-error *ngIf="policyForm.get('allowedTravelClass')?.invalid">
+                Travel class is required
+              </mat-error>
+            </mat-form-field>
           </div>
-          <mat-form-field appearance="outline" class="edit-field">
-            <mat-label>Days</mat-label>
-            <input matInput type="number" [(ngModel)]="policy.maxBookingDays" [disabled]="!isAdmin">
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-    </mat-card>
+          <div class="rule-item">
+            <div class="rule-label">
+              <mat-icon class="rule-icon">calendar_today</mat-icon>
+              <span>Max Advance Booking Days</span>
+            </div>
+            <mat-form-field appearance="outline" class="edit-field">
+              <mat-label>Days</mat-label>
+              <input matInput type="number" formControlName="maxBookingDays" [disabled]="!isAdmin">
+              <mat-error *ngIf="policyForm.get('maxBookingDays')?.invalid">
+                Max booking days must be >= 1
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="rule-item">
+            <div class="rule-label">
+              <mat-icon class="rule-icon">money</mat-icon>
+              <span>Max Hotel per Night</span>
+            </div>
+            <mat-form-field appearance="outline" class="edit-field">
+              <mat-label>Hotel Limit</mat-label>
+              <input matInput type="number" formControlName="maxHotelPerNight" [disabled]="!isAdmin">
+              <span matSuffix>₹</span>
+              <mat-error *ngIf="policyForm.get('maxHotelPerNight')?.invalid">
+                Hotel limit must be >= 0
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
-    <mat-card class="policy-card expense-card">
-      <mat-card-content>
-        <div class="card-header">
-          <mat-icon class="card-icon">receipt_long</mat-icon>
-          <h3>Expense Rules</h3>
-        </div>
-        <div class="rule-item">
-          <div class="rule-label">
-            <mat-icon class="rule-icon">verified</mat-icon>
-            <span>Receipt Mandatory</span>
+      <mat-card class="policy-card expense-card">
+        <mat-card-content>
+          <div class="card-header">
+            <mat-icon class="card-icon">receipt_long</mat-icon>
+            <h3>Expense Rules</h3>
           </div>
-          <mat-slide-toggle [(ngModel)]="policy.receiptMandatory" [disabled]="!isAdmin" class="toggle-field"></mat-slide-toggle>
-        </div>
-        <div class="rule-item">
-          <div class="rule-label">
-            <mat-icon class="rule-icon">restaurant</mat-icon>
-            <span>Food Claim Limit</span>
+          <div class="rule-item">
+            <div class="rule-label">
+              <mat-icon class="rule-icon">verified</mat-icon>
+              <span>Receipt Mandatory</span>
+            </div>
+            <mat-slide-toggle formControlName="receiptMandatory" [disabled]="!isAdmin" class="toggle-field"></mat-slide-toggle>
           </div>
-          <mat-form-field appearance="outline" class="edit-field">
-            <mat-label>Food Limit</mat-label>
-            <input matInput type="number" [(ngModel)]="policy.foodClaimLimit" [disabled]="!isAdmin">
-            <span matSuffix>₹</span>
-          </mat-form-field>
-        </div>
-        <div class="rule-item">
-          <div class="rule-label">
-            <mat-icon class="rule-icon">directions_car</mat-icon>
-            <span>Transport Claim Limit</span>
+          <div class="rule-item">
+            <div class="rule-label">
+              <mat-icon class="rule-icon">restaurant</mat-icon>
+              <span>Daily Food Claim Limit</span>
+            </div>
+            <mat-form-field appearance="outline" class="edit-field">
+              <mat-label>Food Limit</mat-label>
+              <input matInput type="number" formControlName="maxDailyFoodExpense" [disabled]="!isAdmin">
+              <span matSuffix>₹</span>
+              <mat-error *ngIf="policyForm.get('maxDailyFoodExpense')?.invalid">
+                Food limit must be >= 0
+              </mat-error>
+            </mat-form-field>
           </div>
-          <mat-form-field appearance="outline" class="edit-field">
-            <mat-label>Transport Limit</mat-label>
-            <input matInput type="number" [(ngModel)]="policy.transportClaimLimit" [disabled]="!isAdmin">
-            <span matSuffix>₹</span>
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-    </mat-card>
 
-    <mat-card class="policy-card violation-card full-width">
-      <mat-card-content>
-        <div class="card-header">
-          <mat-icon class="card-icon">warning</mat-icon>
-          <h3>Policy Violations</h3>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="policy-card violation-card full-width">
+        <mat-card-content>
+          <div class="card-header">
+            <mat-icon class="card-icon">warning</mat-icon>
+            <h3>Policy Information</h3>
         </div>
         <div class="table-wrapper">
-          <table class="violations-table">
+         <!--  <table class="violations-table">
             <thead>
               <tr>
                 <th>Request ID</th>
@@ -120,10 +146,12 @@
                 <td class="violation-cell">Travel class not allowed</td>
                 <td class="status-cell"><span class="badge warning">Flagged</span></td>
               </tr>
-            </tbody>
-          </table>
+            </tbody> 
+          </table> -->
         </div>
       </mat-card-content>
     </mat-card>
+    </form>
   </div>
+  }
 </div>

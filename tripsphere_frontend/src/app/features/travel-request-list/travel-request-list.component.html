@@ -52,6 +52,17 @@
           </thead>
 
           <tbody>
+              @if (isLoading) {
+                <tr>
+                  <td colspan="7" class="text-center">
+                      <div class="spinner-border text-primary"></div>
+                  </td>
+                </tr>
+              } @else if (filteredRequests.length === 0) {
+                <tr>
+                  <td colspan="7" class="text-center">No travel requests found.</td>
+                </tr>
+              } @else {
               <tr *ngFor="let request of filteredRequests">
                 <td>{{ request.requestNumber }}</td>
                 <td>{{ request.destination }}</td>
@@ -63,11 +74,17 @@
                 <td>₹{{ request.estimatedBudget | number }}</td>
                 <td><span class="status" [ngClass]="getStatusClass(request.status)">{{ getStatusLabel(request.status) }}</span></td>
                 <td class="text-end">
-                  <button mat-stroked-button (click)="viewRequestDetails(request.id)">
+                  <button mat-stroked-button (click)="viewRequestDetails(request.id)" class="action-button">
                     View
                   </button>
+                  @if (isDraftStatus(request.status)) {
+                  <button mat-flat-button color="primary" (click)="submitDraftToManager(request)" class="action-button submit-button">
+                    Submit
+                  </button>
+                  }
                 </td>
               </tr>
+            }
             </tbody>
         </table>
       </div>
